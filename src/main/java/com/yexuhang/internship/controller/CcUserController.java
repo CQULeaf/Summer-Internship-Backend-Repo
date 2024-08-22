@@ -1,7 +1,7 @@
 package com.yexuhang.internship.controller;
 
 import com.yexuhang.internship.config.CommonResult;
-import com.yexuhang.internship.service.IUserService;
+import com.yexuhang.internship.service.CcUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -9,20 +9,25 @@ import org.springframework.web.bind.annotation.*;
 import java.io.Serializable;
 
 /**
- * @author  Xuhang Ye
+ * <p>
+ * 用户表 前端控制器
+ * </p>
+ *
+ * @author Xuhang Ye
+ * @since 2024-08-21
  */
 @RestController
 @RequestMapping("/user")
 @Slf4j
-public class User {
+public class CcUserController {
     @Autowired
-    private IUserService userService;
+    private CcUserService ccUserService;
 
     // 登录接口
     @GetMapping("/login")
     public CommonResult<?> login(String username, String password) {
         try {
-            Serializable user = (Serializable) userService.login(username, password);
+            Serializable user = (Serializable) ccUserService.login(username, password);
             if (user != null) {
                 log.info("User logged in successfully: {}", username);
                 return CommonResult.success(user);
@@ -42,7 +47,7 @@ public class User {
                                     @RequestParam String password) {
         log.info("Registration attempt with username: {}", username);
 
-        CommonResult<?> result = userService.register(username, password);
+        CommonResult<?> result = ccUserService.register(username, password);
         if (result.getCode() == 200) {
             log.info("User registered successfully: {}", username);
         } else {
@@ -50,5 +55,5 @@ public class User {
         }
         return result;
     }
-}
 
+}
