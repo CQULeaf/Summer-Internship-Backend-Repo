@@ -10,11 +10,11 @@ import com.yexuhang.internship.config.CommonResult;
  * </p>
  *
  * @author Xuhang Ye
- * @since 2024-08-21
+ * @since 2024-08-23
  */
 public interface CcUserService extends IService<CcUser> {
 
-        CcUser login(String username, String password);
+    CcUser login(String username, String password);
 
-        CommonResult<?> register(String username, String password);
+    CommonResult<?> register(String username, String password);
 }

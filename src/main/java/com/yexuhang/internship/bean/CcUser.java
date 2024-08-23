@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -14,7 +15,7 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author Xuhang Ye
- * @since 2024-08-21
+ * @since 2024-08-23
  */
 @Getter
 @Setter
@@ -46,39 +47,9 @@ public class CcUser implements Serializable {
     private String avatar;
 
     /**
-     * 封面图片token
-     */
-    private String cover;
-
-    /**
      * 密码
      */
     private String password;
-
-    /**
-     * 注册IP
-     */
-    private String createIp;
-
-    /**
-     * 注册地址
-     */
-    private String createLocation;
-
-    /**
-     * 最后登录时间
-     */
-    private Integer lastLoginTime;
-
-    /**
-     * 最后登陆IP
-     */
-    private String lastLoginIp;
-
-    /**
-     * 最后登录地址
-     */
-    private String lastLoginLocation;
 
     /**
      * 关注我的人数
@@ -93,32 +64,12 @@ public class CcUser implements Serializable {
     /**
      * 我关注的文章数
      */
-    private Integer followingArticleCount;
-
-    /**
-     * 我关注的问题数
-     */
-    private Integer followingQuestionCount;
-
-    /**
-     * 我关注的话题数
-     */
-    private Integer followingTopicCount;
+    private Integer likingPostCount;
 
     /**
      * 我发表的文章数量
      */
-    private Integer articleCount;
-
-    /**
-     * 我发表的问题数量
-     */
-    private Integer questionCount;
-
-    /**
-     * 我发表的回答数量
-     */
-    private Integer answerCount;
+    private Integer postCount;
 
     /**
      * 未读通知数
@@ -141,32 +92,47 @@ public class CcUser implements Serializable {
     private String bio;
 
     /**
-     * 个人主页
-     */
-    private String blog;
-
-    /**
-     * 公司名称
-     */
-    private String company;
-
-    /**
-     * 地址
-     */
-    private String location;
-
-    /**
      * 注册时间
      */
-    private Integer createTime;
+    private LocalDateTime createdAt;
 
     /**
      * 更新时间
      */
-    private Integer updateTime;
+    private LocalDateTime updatedAt;
 
     /**
      * 禁用时间
      */
-    private Integer disableTime;
+    private LocalDateTime disabledAt;
+
+    /**
+     * 朋友的人数
+     */
+    private Integer friendCount;
+
+    /**
+     * 用户电话号码
+     */
+    private String phoneNumber;
+
+    /**
+     * 用户性别
+     */
+    private String gender;
+
+    /**
+     * 家乡
+     */
+    private String hometown;
+
+    /**
+     * 用户专业
+     */
+    private String major;
+
+    /**
+     * 用户MBTI
+     */
+    private String mbti;
 }
