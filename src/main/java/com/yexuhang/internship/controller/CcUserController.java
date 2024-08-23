@@ -14,17 +14,17 @@ import java.io.Serializable;
  * </p>
  *
  * @author Xuhang Ye
- * @since 2024-08-21
+ * @since 2024-08-23
  */
 @RestController
-@RequestMapping("/user")
 @Slf4j
+@RequestMapping("/user")
 public class CcUserController {
     @Autowired
     private CcUserService ccUserService;
 
     // 登录接口
-    @GetMapping("/login")
+    @PostMapping("/login")
     public CommonResult<?> login(String username, String password) {
         try {
             Serializable user = (Serializable) ccUserService.login(username, password);
@@ -55,5 +55,4 @@ public class CcUserController {
         }
         return result;
     }
-
 }

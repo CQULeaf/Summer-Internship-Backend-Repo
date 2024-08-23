@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
  * </p>
  *
  * @author Xuhang Ye
- * @since 2024-08-21
+ * @since 2024-08-23
  */
 @Service
 public class CcUserServiceImpl extends ServiceImpl<CcUserMapper, CcUser> implements CcUserService {

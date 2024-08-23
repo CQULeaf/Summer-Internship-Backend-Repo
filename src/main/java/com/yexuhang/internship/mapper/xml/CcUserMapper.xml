@@ -8,36 +8,29 @@
         <result column="username" property="username" />
         <result column="email" property="email" />
         <result column="avatar" property="avatar" />
-        <result column="cover" property="cover" />
         <result column="password" property="password" />
-        <result column="create_ip" property="createIp" />
-        <result column="create_location" property="createLocation" />
-        <result column="last_login_time" property="lastLoginTime" />
-        <result column="last_login_ip" property="lastLoginIp" />
-        <result column="last_login_location" property="lastLoginLocation" />
         <result column="follower_count" property="followerCount" />
         <result column="followee_count" property="followeeCount" />
-        <result column="following_article_count" property="followingArticleCount" />
-        <result column="following_question_count" property="followingQuestionCount" />
-        <result column="following_topic_count" property="followingTopicCount" />
-        <result column="article_count" property="articleCount" />
-        <result column="question_count" property="questionCount" />
-        <result column="answer_count" property="answerCount" />
+        <result column="liking_post_count" property="likingPostCount" />
+        <result column="post_count" property="postCount" />
         <result column="notification_unread" property="notificationUnread" />
         <result column="inbox_unread" property="inboxUnread" />
         <result column="headline" property="headline" />
         <result column="bio" property="bio" />
-        <result column="blog" property="blog" />
-        <result column="company" property="company" />
-        <result column="location" property="location" />
-        <result column="create_time" property="createTime" />
-        <result column="update_time" property="updateTime" />
-        <result column="disable_time" property="disableTime" />
+        <result column="created_at" property="createdAt" />
+        <result column="updated_at" property="updatedAt" />
+        <result column="disabled_at" property="disabledAt" />
+        <result column="friend_count" property="friendCount" />
+        <result column="phone_number" property="phoneNumber" />
+        <result column="gender" property="gender" />
+        <result column="hometown" property="hometown" />
+        <result column="major" property="major" />
+        <result column="mbti" property="mbti" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        user_id, username, email, avatar, cover, password, create_ip, create_location, last_login_time, last_login_ip, last_login_location, follower_count, followee_count, following_article_count, following_question_count, following_topic_count, article_count, question_count, answer_count, notification_unread, inbox_unread, headline, bio, blog, company, location, create_time, update_time, disable_time
+        user_id, username, email, avatar, password, follower_count, followee_count, liking_post_count, post_count, notification_unread, inbox_unread, headline, bio, created_at, updated_at, disabled_at, friend_count, phone_number, gender, hometown, major, mbti
     </sql>
 
 </mapper>
