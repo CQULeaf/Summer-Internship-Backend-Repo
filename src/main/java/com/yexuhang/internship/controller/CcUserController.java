@@ -1,5 +1,6 @@
 package com.yexuhang.internship.controller;
 
+import com.yexuhang.internship.bean.CcUser;
 import com.yexuhang.internship.config.CommonResult;
 import com.yexuhang.internship.service.CcUserService;
 import lombok.extern.slf4j.Slf4j;
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * <p>
@@ -55,5 +57,26 @@ public class CcUserController {
         }
         return result;
     }
+
+    // 获取用户好友列表接口
+
+    @GetMapping("/friends")
+    public CommonResult<?> getUserFriends(@RequestParam Long userId) {
+        log.info("Fetching friends for user ID: {}", userId);
+        try {
+            CommonResult<?> result = ccUserService.getUserFriends(userId);
+            if (result.getCode() == 200) {
+                log.info("Successfully fetched friends for user ID: {}", userId);
+            } else {
+                log.warn("Failed to fetch friends for user ID: {}", userId);
+            }
+            return result;
+        } catch (Exception e) {
+            log.error("Error fetching friends for user ID: {}", userId, e);
+            // 使用默认错误返回
+            return CommonResult.error("获取好友列表异常");
+        }
+    }
+
 
 }
