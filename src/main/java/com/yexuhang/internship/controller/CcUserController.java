@@ -1,5 +1,6 @@
 package com.yexuhang.internship.controller;
 
+import com.yexuhang.internship.bean.CcUser;
 import com.yexuhang.internship.config.CommonResult;
 import com.yexuhang.internship.service.CcUserService;
 import lombok.extern.slf4j.Slf4j;
@@ -25,19 +26,17 @@ public class CcUserController {
 
     // 登录接口
     @PostMapping("/login")
-    public CommonResult<?> login(String username, String password) {
-        try {
-            Serializable user = (Serializable) ccUserService.login(username, password);
-            if (user != null) {
-                log.info("User logged in successfully: {}", username);
-                return CommonResult.success(user);
-            } else {
-                log.warn("Login failed for username: {}", username);
-                return CommonResult.error("用户名或密码错误");
-            }
-        } catch (Exception e) {
-            log.error("Login error for username: {}", username, e);
-            return CommonResult.error("登录异常");
+    public CommonResult<?> login(@RequestParam String username,
+                                 @RequestParam String password) {
+        log.info("Login attempt with username: {}", username);
+
+        CcUser result = ccUserService.login(username, password);
+        if (result != null) {
+            log.info("User logged in successfully: {}", username);
+            return CommonResult.success(result);
+        } else {
+            log.warn("Login failed for username: {}", username);
+            return CommonResult.error("用户名或密码错误");
         }
     }
 
