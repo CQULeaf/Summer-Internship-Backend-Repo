@@ -20,14 +20,17 @@ import java.io.Serializable;
 @RestController
 @Slf4j
 @RequestMapping("/user")
+@CrossOrigin(origins = "*")
 public class CcUserController {
     @Autowired
     private CcUserService ccUserService;
 
     // 登录接口
     @PostMapping("/login")
-    public CommonResult<?> login(@RequestParam String username,
-                                 @RequestParam String password) {
+    public CommonResult<?> login(@RequestBody CcUser loginRequest) {
+        String username = loginRequest.getUsername();
+        String password = loginRequest.getPassword();
+
         log.info("Login attempt with username: {}", username);
 
         CcUser result = ccUserService.login(username, password);
