@@ -1,5 +1,6 @@
 package com.yexuhang.internship.controller;
 
+import com.yexuhang.internship.bean.CcUser;
 import com.yexuhang.internship.config.CommonResult;
 import com.yexuhang.internship.service.CcUserService;
 import lombok.extern.slf4j.Slf4j;
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * <p>
@@ -40,6 +42,56 @@ public class CcUserController {
             return CommonResult.error("登录异常");
         }
     }
+
+    // 获取用户好友列表接口
+
+    @GetMapping("/friends")
+    public CommonResult<?> getUserFriends(@RequestParam Long userId) {
+        log.info("Fetching friends for user ID: {}", userId);
+        try {
+            CommonResult<?> result = ccUserService.getUserFriends(userId);
+            if (result.getCode() == 200) {
+                log.info("Successfully fetched friends for user ID: {}", userId);
+            } else {
+                log.warn("Failed to fetch friends for user ID: {}", userId);
+            }
+            return result;
+        } catch (Exception e) {
+            log.error("Error fetching friends for user ID: {}", userId, e);
+            // 使用默认错误返回
+            return CommonResult.error("获取好友列表异常");
+        }
+    }
+
+    /**
+     * 用户密码更改接口
+     * @param userId 用户ID
+     * @param currentPassword 当前密码
+     * @param newPassword1 新密码
+     * @param newPassword2 确认新密码
+     * @return 密码更改结果
+     */
+    @PostMapping("/passwordChange")
+    public CommonResult<?> passwordChange(@RequestParam Long userId,
+                                          @RequestParam String currentPassword,
+                                          @RequestParam String newPassword1,
+                                          @RequestParam String newPassword2) {
+        log.info("Password change attempt for user ID: {}", userId);
+
+        try {
+            CommonResult<?> result = ccUserService.passwordChange(userId, currentPassword, newPassword1, newPassword2);
+            if (result.getCode() == 200) {
+                log.info("Password changed successfully for user ID: {}", userId);
+            } else {
+                log.warn("Password change failed for user ID: {}", userId);
+            }
+            return result;
+        } catch (Exception e) {
+            log.error("Error changing password for user ID: {}", userId, e);
+            return CommonResult.error("密码更改异常");
+        }
+    }
+
 
     // 注册接口
     @PostMapping("/register")

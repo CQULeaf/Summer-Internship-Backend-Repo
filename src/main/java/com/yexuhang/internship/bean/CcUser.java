@@ -135,4 +135,7 @@ public class CcUser implements Serializable {
      * 用户MBTI
      */
     private String mbti;
+
+    public void setUpdateTime(int i) {
+    }
 }
