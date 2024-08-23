@@ -10,7 +10,7 @@ import org.apache.ibatis.annotations.Mapper;
  * </p>
  *
  * @author Xuhang Ye
- * @since 2024-08-21
+ * @since 2024-08-23
  */
 @Mapper
 public interface CcUserMapper extends BaseMapper<CcUser> {

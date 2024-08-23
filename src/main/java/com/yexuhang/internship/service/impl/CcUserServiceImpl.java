@@ -7,6 +7,7 @@ import com.yexuhang.internship.mapper.CcUserMapper;
 import com.yexuhang.internship.service.CcUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 
@@ -16,7 +17,7 @@ import java.util.List;
  * </p>
  *
  * @author Xuhang Ye
- * @since 2024-08-21
+ * @since 2024-08-23
  */
 @Service
 public class CcUserServiceImpl extends ServiceImpl<CcUserMapper, CcUser> implements CcUserService {
@@ -59,6 +60,7 @@ public class CcUserServiceImpl extends ServiceImpl<CcUserMapper, CcUser> impleme
             return CommonResult.error("注册失败, 请稍后再试");
         }
     }
+
     @Override
     public CommonResult<?> getUserFriends(Long userId) {
         // 构造查询条件，查找与当前用户互相关注的用户，即好友关系
@@ -77,4 +79,38 @@ public class CcUserServiceImpl extends ServiceImpl<CcUserMapper, CcUser> impleme
         }
     }
 
+    @Override
+    public CommonResult<?> passwordChange(Long userId, String currentPassword, String newPassword1, String newPassword2) {
+        // 检查新密码是否为空
+        if (!StringUtils.hasText(newPassword1) || !StringUtils.hasText(newPassword2)) {
+            return CommonResult.error("新密码不能为空");
+        }
+
+        // 验证新密码是否一致
+        if (!newPassword1.equals(newPassword2)) {
+            return CommonResult.error("新密码输入不一致");
+        }
+
+        // 获取用户信息
+        CcUser user = this.getById(userId);
+        if (user == null) {
+            return CommonResult.error("用户不存在");
+        }
+
+        // 验证当前密码是否正确
+        if (!user.getPassword().equals(currentPassword)) {
+            return CommonResult.error("当前密码不正确");
+        }
+
+        // 更新密码
+        user.setPassword(newPassword1);
+        user.setUpdateTime((int) (System.currentTimeMillis() / 1000)); // 更新用户的更新时间
+
+        boolean updateResult = this.updateById(user);
+        if (updateResult) {
+            return CommonResult.success("密码修改成功");
+        } else {
+            return CommonResult.error("密码修改失败");
+        }
+    }
 }
