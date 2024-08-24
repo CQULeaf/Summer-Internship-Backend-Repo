@@ -17,4 +17,8 @@ public interface CcUserService extends IService<CcUser> {
     CcUser login(String username, String password);
 
     CommonResult<?> register(String username, String password, String password2);
+
+    CommonResult<?> updateInfo(CcUser ccUser);
+
+    CommonResult<?> updatePassword(String username, String oldPassword, String newPassword1, String newPassword2);
 }
