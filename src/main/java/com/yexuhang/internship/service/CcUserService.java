@@ -14,14 +14,11 @@ import java.util.List;
  */
 public interface CcUserService extends IService<CcUser> {
 
-        CcUser login(String username, String password);
-
-
-    CommonResult<?> register(String username, String password);
-
-    CommonResult<?> getUserFriends(Long userId);
+    CcUser login(String username, String password);
 
     CommonResult<?> register(String username, String password, String password2);
+
+    CommonResult<?> getUserFriends(Long userId);
 
     CommonResult<?> updateInfo(CcUser ccUser);
 
