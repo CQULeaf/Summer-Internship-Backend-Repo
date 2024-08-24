@@ -6,6 +6,7 @@ import com.yexuhang.internship.config.CommonResult;
 import com.yexuhang.internship.mapper.CcUserMapper;
 import com.yexuhang.internship.service.CcUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -19,11 +20,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class CcUserServiceImpl extends ServiceImpl<CcUserMapper, CcUser> implements CcUserService {
 
-    private final CcUserMapper ccUserMapper;
-
-    public CcUserServiceImpl(CcUserMapper ccUserMapper) {
-        this.ccUserMapper = ccUserMapper;
-    }
+    @Autowired
+    private CcUserMapper ccUserMapper;
 
     // 实现登录查询
     @Override
@@ -33,9 +31,9 @@ public class CcUserServiceImpl extends ServiceImpl<CcUserMapper, CcUser> impleme
         return ccUserMapper.selectOne(queryWrapper);
     }
 
-    // 实现注册
+    // 实现注册并完成两次密码输入的校验
     @Override
-    public CommonResult<?> register(String username, String password) {
+    public CommonResult<?> register(String username, String password1, String password2) {
         // 检查用户名是否已经存在
         QueryWrapper<CcUser> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("username", username);
@@ -45,10 +43,15 @@ public class CcUserServiceImpl extends ServiceImpl<CcUserMapper, CcUser> impleme
             return CommonResult.error("用户名已存在");
         }
 
+        // 检查两次密码是否一致
+        if (!password1.equals(password2)) {
+            return CommonResult.error("两次密码输入不一致, 请重新输入");
+        }
+
         // 创建新用户对象并保存到数据库
         CcUser newUser = new CcUser();
         newUser.setUsername(username);
-        newUser.setPassword(password);
+        newUser.setPassword(password1);
 
         int result = ccUserMapper.insert(newUser);
         if (result > 0) {
