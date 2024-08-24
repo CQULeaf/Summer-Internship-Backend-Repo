@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yexuhang.internship.mapper.CcFollowMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.yexuhang.internship.bean.CcFollow">
+        <result column="user_id" property="userId" />
+        <result column="followable_id" property="followableId" />
+        <result column="followable_type" property="followableType" />
+        <result column="create_time" property="createTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        user_id, followable_id, followable_type, create_time
+    </sql>
+
+</mapper>

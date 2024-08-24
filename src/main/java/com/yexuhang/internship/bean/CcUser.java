@@ -136,6 +136,7 @@ public class CcUser implements Serializable {
      */
     private String mbti;
 
+  
     /**
      * 用户昵称
      */
