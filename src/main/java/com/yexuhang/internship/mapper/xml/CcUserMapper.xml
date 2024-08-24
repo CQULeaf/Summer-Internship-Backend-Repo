@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yexuhang.internship.mapper.CcUserMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.yexuhang.internship.bean.CcUser">
+        <id column="user_id" property="userId" />
+        <result column="username" property="username" />
+        <result column="email" property="email" />
+        <result column="avatar" property="avatar" />
+        <result column="password" property="password" />
+        <result column="follower_count" property="followerCount" />
+        <result column="followee_count" property="followeeCount" />
+        <result column="liking_post_count" property="likingPostCount" />
+        <result column="post_count" property="postCount" />
+        <result column="notification_unread" property="notificationUnread" />
+        <result column="inbox_unread" property="inboxUnread" />
+        <result column="headline" property="headline" />
+        <result column="bio" property="bio" />
+        <result column="created_at" property="createdAt" />
+        <result column="updated_at" property="updatedAt" />
+        <result column="disabled_at" property="disabledAt" />
+        <result column="friend_count" property="friendCount" />
+        <result column="phone_number" property="phoneNumber" />
+        <result column="gender" property="gender" />
+        <result column="hometown" property="hometown" />
+        <result column="major" property="major" />
+        <result column="mbti" property="mbti" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        user_id, username, email, avatar, password, follower_count, followee_count, liking_post_count, post_count, notification_unread, inbox_unread, headline, bio, created_at, updated_at, disabled_at, friend_count, phone_number, gender, hometown, major, mbti
+    </sql>
+
+</mapper>
