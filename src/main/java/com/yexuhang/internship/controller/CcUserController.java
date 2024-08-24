@@ -2,6 +2,7 @@ package com.yexuhang.internship.controller;
 
 import com.yexuhang.internship.bean.CcUser;
 import com.yexuhang.internship.config.CommonResult;
+import com.yexuhang.internship.dto.RegisterRequestDTO;
 import com.yexuhang.internship.service.CcUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,16 +46,16 @@ public class CcUserController {
 
     // 注册接口
     @PostMapping("/register")
-    public CommonResult<?> register(@RequestParam String username,
-                                    @RequestParam String password) {
-        log.info("Registration attempt with username: {}", username);
+    public CommonResult<?> register(@RequestBody RegisterRequestDTO registerRequestDTO) {
+        String username = registerRequestDTO.getUsername();
+        String password1 = registerRequestDTO.getPassword1();
+        String password2 = registerRequestDTO.getPassword2();
 
-        CommonResult<?> result = ccUserService.register(username, password);
-        if (result.getCode() == 200) {
-            log.info("User registered successfully: {}", username);
-        } else {
-            log.warn("Registration failed for username: {}", username);
-        }
-        return result;
+        log.info("Register attempt with username: {}", username);
+
+        return ccUserService.register(username, password1, password2);
     }
+
+
+    // 
 }
