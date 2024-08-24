@@ -29,6 +29,6 @@ public class CommonResult<T> {
     }
 
     public static <T> CommonResult<T> error(T t) {
-        return new CommonResult<T>(300, "操作失败", t);
+        return new CommonResult<T>(400, "操作失败", t);
     }
 }

@@ -5,10 +5,13 @@ import com.yexuhang.internship.config.CommonResult;
 import com.yexuhang.internship.dto.RegisterRequestDTO;
 import com.yexuhang.internship.dto.updatePassword;
 import com.yexuhang.internship.service.CcUserService;
+import com.yexuhang.internship.util.UploadUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.io.Serializable;
 
 /**
@@ -78,5 +81,16 @@ public class CcUserController {
         return ccUserService.updatePassword(username, oldPassword, newPassword1, newPassword2);
     }
 
+    // 更新用户头像
+    @PostMapping("/updateAvatar")
+    public CommonResult<?> updateAvatar(@RequestParam("file") MultipartFile file, @RequestParam("username") String username) {
+        try {
+            String avatar = UploadUtil.uploadImage(file);
+            return ccUserService.updateAvatar(username, avatar);
+        } catch (IOException e) {
+            log.error("Failed to upload avatar for username: {}", username, e);
+            return CommonResult.error("头像上传失败");
+        }
+    }
 
 }
