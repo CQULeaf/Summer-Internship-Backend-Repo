@@ -1,6 +1,5 @@
 package com.yexuhang.internship.controller;
 
-import com.yexuhang.internship.bean.CcUser;
 import com.yexuhang.internship.config.CommonResult;
 import com.yexuhang.internship.service.CcUserService;
 import lombok.extern.slf4j.Slf4j;
@@ -8,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * <p>
@@ -43,9 +41,27 @@ public class CcUserController {
         }
     }
 
+
+
+
+    // 注册接口
+    @PostMapping("/register")
+    public CommonResult<?> register(@RequestParam String username,
+                                    @RequestParam String password) {
+        log.info("Registration attempt with username: {}", username);
+
+        CommonResult<?> result = ccUserService.register(username, password);
+        if (result.getCode() == 200) {
+            log.info("User registered successfully: {}", username);
+        } else {
+            log.warn("Registration failed for username: {}", username);
+        }
+        return result;
+    }
+
     // 获取用户好友列表接口
 
-    @GetMapping("/friends")
+    @GetMapping("/getFriend")
     public CommonResult<?> getUserFriends(@RequestParam Long userId) {
         log.info("Fetching friends for user ID: {}", userId);
         try {
@@ -90,21 +106,5 @@ public class CcUserController {
             log.error("Error changing password for user ID: {}", userId, e);
             return CommonResult.error("密码更改异常");
         }
-    }
-
-
-    // 注册接口
-    @PostMapping("/register")
-    public CommonResult<?> register(@RequestParam String username,
-                                    @RequestParam String password) {
-        log.info("Registration attempt with username: {}", username);
-
-        CommonResult<?> result = ccUserService.register(username, password);
-        if (result.getCode() == 200) {
-            log.info("User registered successfully: {}", username);
-        } else {
-            log.warn("Registration failed for username: {}", username);
-        }
-        return result;
     }
 }

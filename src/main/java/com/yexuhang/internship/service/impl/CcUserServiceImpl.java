@@ -65,8 +65,7 @@ public class CcUserServiceImpl extends ServiceImpl<CcUserMapper, CcUser> impleme
     public CommonResult<?> getUserFriends(Long userId) {
         // 构造查询条件，查找与当前用户互相关注的用户，即好友关系
         QueryWrapper<CcUser> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("follower_count", userId)
-                .eq("followee_count", userId);
+        queryWrapper.eq("follower_id", userId).or().eq("followee_id", userId);
 
         // 查询好友列表
         List<CcUser> friendsList = ccUserMapper.selectList(queryWrapper);
@@ -78,6 +77,7 @@ public class CcUserServiceImpl extends ServiceImpl<CcUserMapper, CcUser> impleme
             return CommonResult.error("没有找到好友");
         }
     }
+
 
     @Override
     public CommonResult<?> passwordChange(Long userId, String currentPassword, String newPassword1, String newPassword2) {
@@ -113,4 +113,6 @@ public class CcUserServiceImpl extends ServiceImpl<CcUserMapper, CcUser> impleme
             return CommonResult.error("密码修改失败");
         }
     }
+
+
 }
