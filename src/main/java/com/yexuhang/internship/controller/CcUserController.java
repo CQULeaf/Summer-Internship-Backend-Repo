@@ -49,8 +49,6 @@ public class CcUserController {
     }
 
 
-
-
     // 注册接口
     @PostMapping("/register")
     public CommonResult<?> register(@RequestBody RegisterRequestDTO registerRequestDTO) {
@@ -98,8 +96,7 @@ public class CcUserController {
 
 
     // 获取用户好友列表接口
-
-    @GetMapping("/getFriend")
+    @GetMapping("/getFriends")
     public CommonResult<?> getUserFriends(@RequestParam Long userId) {
         log.info("Fetching friends for user ID: {}", userId);
         try {
@@ -114,35 +111,6 @@ public class CcUserController {
             log.error("Error fetching friends for user ID: {}", userId, e);
             // 使用默认错误返回
             return CommonResult.error("获取好友列表异常");
-        }
-    }
-
-    /**
-     * 用户密码更改接口
-     * @param userId 用户ID
-     * @param currentPassword 当前密码
-     * @param newPassword1 新密码
-     * @param newPassword2 确认新密码
-     * @return 密码更改结果
-     */
-    @PostMapping("/passwordChange")
-    public CommonResult<?> passwordChange(@RequestParam Long userId,
-                                          @RequestParam String currentPassword,
-                                          @RequestParam String newPassword1,
-                                          @RequestParam String newPassword2) {
-        log.info("Password change attempt for user ID: {}", userId);
-
-        try {
-            CommonResult<?> result = ccUserService.passwordChange(userId, currentPassword, newPassword1, newPassword2);
-            if (result.getCode() == 200) {
-                log.info("Password changed successfully for user ID: {}", userId);
-            } else {
-                log.warn("Password change failed for user ID: {}", userId);
-            }
-            return result;
-        } catch (Exception e) {
-            log.error("Error changing password for user ID: {}", userId, e);
-            return CommonResult.error("密码更改异常");
         }
     }
 }

@@ -63,7 +63,7 @@ public class CcFollowServiceImpl extends ServiceImpl<CcFollowMapper, CcFollow> i
         // 查询当前用户关注的所有用户的 ID 列表
         QueryWrapper<CcFollow> followingsQuery = new QueryWrapper<>();
         followingsQuery.eq("user_id", userIdInt)
-                .eq("followable_type", "user"); // 假设关注类型为用户（user）
+                .eq("followable_type", "user");
         List<CcFollow> followings = ccFollowMapper.selectList(followingsQuery);
 
         // 提取当前用户关注的所有用户的 ID
@@ -77,15 +77,15 @@ public class CcFollowServiceImpl extends ServiceImpl<CcFollowMapper, CcFollow> i
 
         // 查询这些用户中也关注了当前用户的用户
         QueryWrapper<CcFollow> followersQuery = new QueryWrapper<>();
-        followersQuery.eq("followable_type", "user")  // 同样假设关注类型为用户
+        followersQuery.eq("followable_type", "user")
                 .eq("followable_id", userIdInt)
-                .in("user_id", followingIds); // 查找当前用户关注的用户中也关注了当前用户的用户
+                .in("user_id", followingIds);
 
         List<CcFollow> friends = ccFollowMapper.selectList(followersQuery);
 
         // 提取互相关注的用户 ID
         List<Long> friendIds = friends.stream()
-                .map(follower -> follower.getUserId().longValue()) // 转换为 Long 类型
+                .map(follower -> follower.getUserId().longValue())
                 .distinct()
                 .collect(Collectors.toList());
 
@@ -102,7 +102,7 @@ public class CcFollowServiceImpl extends ServiceImpl<CcFollowMapper, CcFollow> i
         // 查询用户关注的超话ID
         QueryWrapper<CcFollow> followQuery = new QueryWrapper<>();
         followQuery.eq("user_id", userId)
-                .eq("followable_type", "topic"); // 关注类型为话题(topic)
+                .eq("followable_type", "topic");
 
         List<CcFollow> followList = ccFollowMapper.selectList(followQuery);
 

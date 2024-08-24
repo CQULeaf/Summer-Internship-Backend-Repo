@@ -107,7 +107,7 @@ public class CcFollowController {
      * @param userId 用户ID
      * @return 用户关注的超话列表或错误信息
      */
-    @GetMapping("/superWordNameConcern")
+    @GetMapping("/topicConcern")
     public CommonResult<?> getSuperWordNameConcern(@RequestParam Integer userId) {
         try {
             log.info("Fetching followed topics for userId: {}", userId);
