@@ -29,4 +29,8 @@ public interface CcUserService extends IService<CcUser> {
      * @return 密码更改结果
      */
     CommonResult<?> passwordChange(Long userId, String currentPassword, String newPassword1, String newPassword2);
+
+
+
+
 }
