@@ -8,6 +8,9 @@ import com.yexuhang.internship.service.CcUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+
+import java.util.List;
 
 /**
  * <p>
@@ -29,6 +32,11 @@ public class CcUserServiceImpl extends ServiceImpl<CcUserMapper, CcUser> impleme
         QueryWrapper<CcUser> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("username", username).eq("password", password);
         return ccUserMapper.selectOne(queryWrapper);
+    }
+
+    @Override
+    public CommonResult<?> register(String username, String password) {
+        return null;
     }
 
     // 实现注册并完成两次密码输入的校验
@@ -58,6 +66,24 @@ public class CcUserServiceImpl extends ServiceImpl<CcUserMapper, CcUser> impleme
             return CommonResult.success("注册成功");
         } else {
             return CommonResult.error("注册失败, 请稍后再试");
+        }
+    }
+
+
+    @Override
+    public CommonResult<?> getUserFriends(Long userId) {
+        // 构造查询条件，查找与当前用户互相关注的用户，即好友关系
+        QueryWrapper<CcUser> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("follower_id", userId).or().eq("followee_id", userId);
+
+        // 查询好友列表
+        List<CcUser> friendsList = ccUserMapper.selectList(queryWrapper);
+
+        // 返回封装的结果
+        if (friendsList != null && !friendsList.isEmpty()) {
+            return CommonResult.success(friendsList);
+        } else {
+            return CommonResult.error("没有找到好友");
         }
     }
 
@@ -116,8 +142,4 @@ public class CcUserServiceImpl extends ServiceImpl<CcUserMapper, CcUser> impleme
             return CommonResult.error("头像更新失败, 请稍后再试");
         }
     }
-
-
-
-
 }
