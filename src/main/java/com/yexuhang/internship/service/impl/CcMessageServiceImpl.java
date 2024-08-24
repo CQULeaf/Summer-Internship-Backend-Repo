@@ -27,9 +27,6 @@ import java.util.List;
 @Service
 public class CcMessageServiceImpl extends ServiceImpl<CcMessageMapper, CcMessage> implements CcMessageService {
     @Autowired
-    private CcUserMapper ccUserMapper;
-
-    @Autowired
     private CcMessageMapper ccMessageMapper;
 
     @Autowired
@@ -53,7 +50,7 @@ public class CcMessageServiceImpl extends ServiceImpl<CcMessageMapper, CcMessage
         message.setSenderId(senderId);
         message.setReceiverId(receiverId);
         message.setContent(content);
-        message.setCreatedAt(new Timestamp(System.currentTimeMillis()).toLocalDateTime());
+        message.setCreatedAt(new Timestamp(System.currentTimeMillis()));
         int result = ccMessageMapper.insert(message);
 
         if (result > 0) {
@@ -64,6 +61,7 @@ public class CcMessageServiceImpl extends ServiceImpl<CcMessageMapper, CcMessage
     }
 
     // 获取用户的所有聊天记录
+    @Override
     public CommonResult<?> getChatHistory(int userId) {
         // 获取所有与用户相关的聊天记录
         QueryWrapper<CcMessage> messageQueryWrapper = new QueryWrapper<>();

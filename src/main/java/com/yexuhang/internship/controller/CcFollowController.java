@@ -18,7 +18,7 @@ import java.util.List;
  */
 @RestController
 @Slf4j
-@RequestMapping("/follow")
+@RequestMapping("/user")
 public class CcFollowController {
 
     @Autowired
@@ -31,7 +31,7 @@ public class CcFollowController {
      * @param followableType  关注类型
      * @return 用户关注列表的封装结果
      */
-    @GetMapping("/userFollows")
+    @GetMapping("/following")
     public CommonResult<?> getUserFollows(@RequestParam Long userId,
                                           @RequestParam String followableType) {
         try {
