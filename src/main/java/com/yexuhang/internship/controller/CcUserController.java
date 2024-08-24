@@ -3,6 +3,7 @@ package com.yexuhang.internship.controller;
 import com.yexuhang.internship.bean.CcUser;
 import com.yexuhang.internship.config.CommonResult;
 import com.yexuhang.internship.dto.RegisterRequestDTO;
+import com.yexuhang.internship.dto.updatePassword;
 import com.yexuhang.internship.service.CcUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,5 +58,25 @@ public class CcUserController {
     }
 
 
-    // 
+    // 修改个人信息
+    @PostMapping("/updateInfo")
+    public CommonResult<?> updateInfo(@RequestBody CcUser ccUser) {
+        log.info("Update info attempt with username: {}", ccUser.getUsername());
+        return ccUserService.updateInfo(ccUser);
+    }
+
+    // 修改密码
+    @PostMapping("/updatePassword")
+    public CommonResult<?> updatePassword(@RequestBody updatePassword updatePassword) {
+        String username = updatePassword.getUsername();
+        String oldPassword = updatePassword.getOldPassword();
+        String newPassword1 = updatePassword.getNewPassword1();
+        String newPassword2 = updatePassword.getNewPassword2();
+
+        log.info("Update password attempt with username: {}", username);
+
+        return ccUserService.updatePassword(username, oldPassword, newPassword1, newPassword2);
+    }
+
+
 }
