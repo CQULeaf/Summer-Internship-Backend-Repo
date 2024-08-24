@@ -97,7 +97,26 @@ public class CcUserServiceImpl extends ServiceImpl<CcUserMapper, CcUser> impleme
         }
     }
 
-    // 绑定手机号
+    // 更新用户头像
+    @Override
+    public CommonResult<?> updateAvatar(String username, String avatar) {
+        QueryWrapper<CcUser> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("username", username);
+        CcUser existingUser = ccUserMapper.selectOne(queryWrapper);
+
+        if (existingUser == null) {
+            return CommonResult.error("用户不存在");
+        }
+
+        existingUser.setAvatar(avatar);
+        int result = ccUserMapper.updateById(existingUser);
+        if (result > 0) {
+            return CommonResult.success("头像更新成功");
+        } else {
+            return CommonResult.error("头像更新失败, 请稍后再试");
+        }
+    }
+
 
 
 
