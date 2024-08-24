@@ -136,6 +136,9 @@ public class CcUser implements Serializable {
      */
     private String mbti;
 
-    public void setUpdateTime(int i) {
-    }
+  
+    /**
+     * 用户昵称
+     */
+    private String nickname;
 }

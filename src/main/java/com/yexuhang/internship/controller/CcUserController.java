@@ -1,11 +1,17 @@
 package com.yexuhang.internship.controller;
 
+import com.yexuhang.internship.bean.CcUser;
 import com.yexuhang.internship.config.CommonResult;
+import com.yexuhang.internship.dto.RegisterRequestDTO;
+import com.yexuhang.internship.dto.updatePassword;
 import com.yexuhang.internship.service.CcUserService;
+import com.yexuhang.internship.util.UploadUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.io.Serializable;
 
 /**
@@ -19,25 +25,26 @@ import java.io.Serializable;
 @RestController
 @Slf4j
 @RequestMapping("/user")
+@CrossOrigin(origins = "*")
 public class CcUserController {
     @Autowired
     private CcUserService ccUserService;
 
     // 登录接口
     @PostMapping("/login")
-    public CommonResult<?> login(String username, String password) {
-        try {
-            Serializable user = (Serializable) ccUserService.login(username, password);
-            if (user != null) {
-                log.info("User logged in successfully: {}", username);
-                return CommonResult.success(user);
-            } else {
-                log.warn("Login failed for username: {}", username);
-                return CommonResult.error("用户名或密码错误");
-            }
-        } catch (Exception e) {
-            log.error("Login error for username: {}", username, e);
-            return CommonResult.error("登录异常");
+    public CommonResult<?> login(@RequestBody CcUser loginRequest) {
+        String username = loginRequest.getUsername();
+        String password = loginRequest.getPassword();
+
+        log.info("Login attempt with username: {}", username);
+
+        CcUser result = ccUserService.login(username, password);
+        if (result != null) {
+            log.info("User logged in successfully: {}", username);
+            return CommonResult.success(result);
+        } else {
+            log.warn("Login failed for username: {}", username);
+            return CommonResult.error("用户名或密码错误");
         }
     }
 
@@ -46,18 +53,49 @@ public class CcUserController {
 
     // 注册接口
     @PostMapping("/register")
-    public CommonResult<?> register(@RequestParam String username,
-                                    @RequestParam String password) {
-        log.info("Registration attempt with username: {}", username);
+    public CommonResult<?> register(@RequestBody RegisterRequestDTO registerRequestDTO) {
+        String username = registerRequestDTO.getUsername();
+        String password1 = registerRequestDTO.getPassword1();
+        String password2 = registerRequestDTO.getPassword2();
 
-        CommonResult<?> result = ccUserService.register(username, password);
-        if (result.getCode() == 200) {
-            log.info("User registered successfully: {}", username);
-        } else {
-            log.warn("Registration failed for username: {}", username);
-        }
-        return result;
+        log.info("Register attempt with username: {}", username);
+
+        return ccUserService.register(username, password1, password2);
     }
+
+
+    // 修改个人信息
+    @PostMapping("/updateInfo")
+    public CommonResult<?> updateInfo(@RequestBody CcUser ccUser) {
+        log.info("Update info attempt with username: {}", ccUser.getUsername());
+        return ccUserService.updateInfo(ccUser);
+    }
+
+    // 修改密码
+    @PostMapping("/updatePassword")
+    public CommonResult<?> updatePassword(@RequestBody updatePassword updatePassword) {
+        String username = updatePassword.getUsername();
+        String oldPassword = updatePassword.getOldPassword();
+        String newPassword1 = updatePassword.getNewPassword1();
+        String newPassword2 = updatePassword.getNewPassword2();
+
+        log.info("Update password attempt with username: {}", username);
+
+        return ccUserService.updatePassword(username, oldPassword, newPassword1, newPassword2);
+    }
+
+    // 更新用户头像
+    @PostMapping("/updateAvatar")
+    public CommonResult<?> updateAvatar(@RequestParam("file") MultipartFile file, @RequestParam("username") String username) {
+        try {
+            String avatar = UploadUtil.uploadImage(file);
+            return ccUserService.updateAvatar(username, avatar);
+        } catch (IOException e) {
+            log.error("Failed to upload avatar for username: {}", username, e);
+            return CommonResult.error("头像上传失败");
+        }
+    }
+
 
     // 获取用户好友列表接口
 
