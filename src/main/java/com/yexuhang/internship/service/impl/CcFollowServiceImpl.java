@@ -133,4 +133,41 @@ public class CcFollowServiceImpl extends ServiceImpl<CcFollowMapper, CcFollow> i
             return CommonResult.error("没有找到超话详细信息");
         }
     }
+
+    @Override
+    public CommonResult<List<Long>> getFollowedPostsByUserId(Long userId) {
+        // 使用 QueryWrapper 查询所有关注类型为 "post" 的记录
+        QueryWrapper<CcFollow> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("user_id", userId)
+                .eq("followable_type", "post");
+
+        List<CcFollow> follows = ccFollowMapper.selectList(queryWrapper);
+
+        // 提取所有关注的帖子ID
+        List<Long> postIds = follows.stream()
+                .map(CcFollow::getFollowableId)
+                .map(Long::valueOf)
+                .collect(Collectors.toList());
+
+        return CommonResult.success(postIds);
+    }
+
+
+    @Override
+    public CommonResult<List<Long>> getUsersFollowingPost(Long postId) {
+        // 使用 QueryWrapper 查询所有关注类型为 "post" 且 followable_id 为 postId 的记录
+        QueryWrapper<CcFollow> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("followable_id", postId)
+                .eq("followable_type", "post");
+
+        List<CcFollow> follows = ccFollowMapper.selectList(queryWrapper);
+
+        // 提取所有关注该帖子的用户ID
+        List<Long> userIds = follows.stream()
+                .map(CcFollow::getUserId)
+                .map(Long::valueOf)
+                .collect(Collectors.toList());
+
+        return CommonResult.success(userIds);
+    }
 }

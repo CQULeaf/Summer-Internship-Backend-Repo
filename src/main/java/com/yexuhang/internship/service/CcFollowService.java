@@ -1,8 +1,10 @@
 package com.yexuhang.internship.service;
 
-import com.yexuhang.internship.bean.CcFollow;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.yexuhang.internship.bean.CcFollow;
 import com.yexuhang.internship.config.CommonResult;
+
+import java.util.List;
 
 /**
  * <p>
@@ -36,4 +38,15 @@ public interface CcFollowService extends IService<CcFollow> {
      * @return 用户关注的超话列表或错误信息
      */
     CommonResult<?> getUserFollowedTopics(Integer userId);
+
+
+    /**
+     * 根据用户ID获取用户关注的所有帖子ID
+     *
+     * @param userId 用户ID
+     * @return 用户关注的所有帖子ID列表
+     */
+    CommonResult<List<Long>> getFollowedPostsByUserId(Long userId);
+
+    CommonResult<List<Long>> getUsersFollowingPost(Long postId);
 }
