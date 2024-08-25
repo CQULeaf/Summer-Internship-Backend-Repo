@@ -4,15 +4,13 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.generator.FastAutoGenerator;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 
-import java.util.Collections;
-
 /**
  * @author Xuhang Ye
  * @time 4:45 PM
  */
 public class CodeGenerator {
     public static void main(String[] args) {
-        generator("convocorner","cc_topic");
+        generator("convocorner","cc_comment");
     }
     public static void generator(String databaseName,String... tableName){
         FastAutoGenerator.create("jdbc:mysql://47.120.1.65:3306/"+databaseName+"?&useSSL=true&useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai","ecs-user","Yexuhang2004#")

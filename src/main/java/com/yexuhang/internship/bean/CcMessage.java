@@ -3,15 +3,15 @@ package com.yexuhang.internship.bean;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import java.io.Serializable;
+import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
-import java.io.Serializable;
-
 /**
  * <p>
- * 话题表
+ * 消息表
  * </p>
  *
  * @author Xuhang Ye
@@ -20,41 +20,34 @@ import java.io.Serializable;
 @Getter
 @Setter
 @Accessors(chain = true)
-@TableName("cc_topic")
-public class CcTopic implements Serializable {
+@TableName("cc_message")
+public class CcMessage implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     /**
-     * 话题ID
+     * 私信ID
      */
-    @TableId(value = "topic_id", type = IdType.AUTO)
-    private Integer topicId;
+    @TableId(value = "message_id", type = IdType.AUTO)
+    private Integer messageId;
 
     /**
-     * 话题名称
+     * 接收者ID
      */
-    private String name;
+    private Integer receiverId;
 
     /**
-     * 封面图片token
+     * 发送者ID
      */
-    private String cover;
+    private Integer senderId;
 
     /**
-     * 话题描述
+     * 私信内容
      */
-    private String description;
+    private String content;
 
     /**
-     * 帖子数量
+     * 发送时间
      */
-    private Integer postCount;
-
-    /**
-     * 关注者数量
-     */
-    private Integer followerCount;
-
-    private String flag;
+    private LocalDateTime createdAt;
 }

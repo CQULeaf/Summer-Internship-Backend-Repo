@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.io.Serializable;
 
 /**
  * <p>
@@ -47,8 +46,6 @@ public class CcUserController {
             return CommonResult.error("用户名或密码错误");
         }
     }
-
-
 
 
     // 注册接口
@@ -98,8 +95,7 @@ public class CcUserController {
 
 
     // 获取用户好友列表接口
-
-    @GetMapping("/getFriend")
+    @GetMapping("/getFriends")
     public CommonResult<?> getUserFriends(@RequestParam Long userId) {
         log.info("Fetching friends for user ID: {}", userId);
         try {
@@ -118,31 +114,13 @@ public class CcUserController {
     }
 
     /**
-     * 用户密码更改接口
+     * 根据用户ID获取用户信息
+     *
      * @param userId 用户ID
-     * @param currentPassword 当前密码
-     * @param newPassword1 新密码
-     * @param newPassword2 确认新密码
-     * @return 密码更改结果
+     * @return 用户信息
      */
-    @PostMapping("/passwordChange")
-    public CommonResult<?> passwordChange(@RequestParam Long userId,
-                                          @RequestParam String currentPassword,
-                                          @RequestParam String newPassword1,
-                                          @RequestParam String newPassword2) {
-        log.info("Password change attempt for user ID: {}", userId);
-
-        try {
-            CommonResult<?> result = ccUserService.passwordChange(userId, currentPassword, newPassword1, newPassword2);
-            if (result.getCode() == 200) {
-                log.info("Password changed successfully for user ID: {}", userId);
-            } else {
-                log.warn("Password change failed for user ID: {}", userId);
-            }
-            return result;
-        } catch (Exception e) {
-            log.error("Error changing password for user ID: {}", userId, e);
-            return CommonResult.error("密码更改异常");
-        }
+    @GetMapping("/getUserInfo")
+    public CommonResult<CcUser> getUserInfo(@RequestParam("userId") Long userId) {
+        return ccUserService.getUserById(userId);
     }
 }

@@ -1,17 +1,19 @@
 package com.yexuhang.internship.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yexuhang.internship.bean.CcFollow;
 import com.yexuhang.internship.bean.CcTopic;
 import com.yexuhang.internship.config.CommonResult;
 import com.yexuhang.internship.mapper.CcFollowMapper;
 import com.yexuhang.internship.mapper.CcTopicMapper;
 import com.yexuhang.internship.service.CcFollowService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -56,14 +58,14 @@ public class CcFollowServiceImpl extends ServiceImpl<CcFollowMapper, CcFollow> i
     }
 
     @Override
-    public CommonResult<?> getFriends(Long userId) {
+    public CommonResult<List<Map<String, Object>>> getFriends(Long userId) {
         // 将 userId 转换为 Integer 以匹配数据库中的 int unsigned 类型
         Integer userIdInt = userId.intValue();
 
         // 查询当前用户关注的所有用户的 ID 列表
         QueryWrapper<CcFollow> followingsQuery = new QueryWrapper<>();
         followingsQuery.eq("user_id", userIdInt)
-                .eq("followable_type", "user"); // 假设关注类型为用户（user）
+                .eq("followable_type", "user");
         List<CcFollow> followings = ccFollowMapper.selectList(followingsQuery);
 
         // 提取当前用户关注的所有用户的 ID
@@ -77,20 +79,24 @@ public class CcFollowServiceImpl extends ServiceImpl<CcFollowMapper, CcFollow> i
 
         // 查询这些用户中也关注了当前用户的用户
         QueryWrapper<CcFollow> followersQuery = new QueryWrapper<>();
-        followersQuery.eq("followable_type", "user")  // 同样假设关注类型为用户
+        followersQuery.eq("followable_type", "user")
                 .eq("followable_id", userIdInt)
-                .in("user_id", followingIds); // 查找当前用户关注的用户中也关注了当前用户的用户
+                .in("user_id", followingIds);
 
         List<CcFollow> friends = ccFollowMapper.selectList(followersQuery);
 
-        // 提取互相关注的用户 ID
-        List<Long> friendIds = friends.stream()
-                .map(follower -> follower.getUserId().longValue()) // 转换为 Long 类型
+        // 构造返回的好友对象列表
+        List<Map<String, Object>> friendDetails = friends.stream()
+                .map(follower -> {
+                    Map<String, Object> friendData = new HashMap<>();
+                    friendData.put("user_id", follower.getUserId().longValue());
+                    return friendData;
+                })
                 .distinct()
                 .collect(Collectors.toList());
 
-        if (!friendIds.isEmpty()) {
-            return CommonResult.success(friendIds);
+        if (!friendDetails.isEmpty()) {
+            return CommonResult.success(friendDetails);
         } else {
             return CommonResult.error("没有找到好友");
         }
@@ -102,7 +108,7 @@ public class CcFollowServiceImpl extends ServiceImpl<CcFollowMapper, CcFollow> i
         // 查询用户关注的超话ID
         QueryWrapper<CcFollow> followQuery = new QueryWrapper<>();
         followQuery.eq("user_id", userId)
-                .eq("followable_type", "topic"); // 关注类型为话题(topic)
+                .eq("followable_type", "topic");
 
         List<CcFollow> followList = ccFollowMapper.selectList(followQuery);
 
@@ -126,5 +132,42 @@ public class CcFollowServiceImpl extends ServiceImpl<CcFollowMapper, CcFollow> i
         } else {
             return CommonResult.error("没有找到超话详细信息");
         }
+    }
+
+    @Override
+    public CommonResult<List<Long>> getFollowedPostsByUserId(Long userId) {
+        // 使用 QueryWrapper 查询所有关注类型为 "post" 的记录
+        QueryWrapper<CcFollow> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("user_id", userId)
+                .eq("followable_type", "post");
+
+        List<CcFollow> follows = ccFollowMapper.selectList(queryWrapper);
+
+        // 提取所有关注的帖子ID
+        List<Long> postIds = follows.stream()
+                .map(CcFollow::getFollowableId)
+                .map(Long::valueOf)
+                .collect(Collectors.toList());
+
+        return CommonResult.success(postIds);
+    }
+
+
+    @Override
+    public CommonResult<List<Long>> getUsersFollowingPost(Long postId) {
+        // 使用 QueryWrapper 查询所有关注类型为 "post" 且 followable_id 为 postId 的记录
+        QueryWrapper<CcFollow> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("followable_id", postId)
+                .eq("followable_type", "post");
+
+        List<CcFollow> follows = ccFollowMapper.selectList(queryWrapper);
+
+        // 提取所有关注该帖子的用户ID
+        List<Long> userIds = follows.stream()
+                .map(CcFollow::getUserId)
+                .map(Long::valueOf)
+                .collect(Collectors.toList());
+
+        return CommonResult.success(userIds);
     }
 }

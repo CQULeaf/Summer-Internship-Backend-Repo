@@ -4,7 +4,10 @@ import com.yexuhang.internship.config.CommonResult;
 import com.yexuhang.internship.service.CcFollowService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -107,7 +110,7 @@ public class CcFollowController {
      * @param userId 用户ID
      * @return 用户关注的超话列表或错误信息
      */
-    @GetMapping("/superWordNameConcern")
+    @GetMapping("/topicConcern")
     public CommonResult<?> getSuperWordNameConcern(@RequestParam Integer userId) {
         try {
             log.info("Fetching followed topics for userId: {}", userId);
@@ -116,5 +119,28 @@ public class CcFollowController {
             log.error("Error fetching followed topics for userId: {}", userId, e);
             return CommonResult.error("获取关注超话时发生异常");
         }
+    }
+
+
+    /**
+     * 根据用户ID获取用户关注的所有帖子ID
+     *
+     * @param userId 用户ID
+     * @return 用户关注的所有帖子ID列表
+     */
+    @GetMapping("/getFollowedPosts")
+    public CommonResult<List<Long>> getFollowedPosts(@RequestParam("userId") Long userId) {
+        return ccFollowService.getFollowedPostsByUserId(userId);
+    }
+
+    /**
+     * 根据帖子ID获取所有关注该帖子的用户ID
+     *
+     * @param postId 帖子ID
+     * @return 关注该帖子的所有用户ID列表
+     */
+    @GetMapping("/getUsersFollowingPost")
+    public CommonResult<List<Long>> getUsersFollowingPost(@RequestParam("postId") Long postId) {
+        return ccFollowService.getUsersFollowingPost(postId);
     }
 }
