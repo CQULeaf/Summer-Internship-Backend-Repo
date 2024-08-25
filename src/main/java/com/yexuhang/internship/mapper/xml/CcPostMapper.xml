@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yexuhang.internship.mapper.CcPostMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.yexuhang.internship.bean.CcPost">
+        <id column="post_id" property="postId" />
+        <result column="user_id" property="userId" />
+        <result column="title" property="title" />
+        <result column="post_content" property="postContent" />
+        <result column="comment_count" property="commentCount" />
+        <result column="like_count" property="likeCount" />
+        <result column="created_at" property="createdAt" />
+        <result column="updated_time" property="updatedTime" />
+        <result column="updated_at" property="updatedAt" />
+        <result column="deleted_at" property="deletedAt" />
+        <result column="cover" property="cover" />
+        <result column="topic_id" property="topicId" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        post_id, user_id, title, post_content, comment_count, like_count, created_at, updated_time, updated_at, deleted_at, cover, topic_id
+    </sql>
+
+</mapper>
