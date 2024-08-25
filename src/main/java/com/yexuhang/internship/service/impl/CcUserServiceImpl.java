@@ -8,7 +8,6 @@ import com.yexuhang.internship.service.CcUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import java.util.List;
 
@@ -34,10 +33,7 @@ public class CcUserServiceImpl extends ServiceImpl<CcUserMapper, CcUser> impleme
         return ccUserMapper.selectOne(queryWrapper);
     }
 
-    @Override
-    public CommonResult<?> register(String username, String password) {
-        return null;
-    }
+
 
     // 实现注册并完成两次密码输入的校验
     @Override
@@ -140,6 +136,17 @@ public class CcUserServiceImpl extends ServiceImpl<CcUserMapper, CcUser> impleme
             return CommonResult.success("头像更新成功");
         } else {
             return CommonResult.error("头像更新失败, 请稍后再试");
+        }
+    }
+
+    @Override
+    public CommonResult<CcUser> getUserById(Long userId) {
+        // 使用 MyBatis-Plus 提供的 selectById 方法查询用户信息
+        CcUser user = ccUserMapper.selectById(userId);
+        if (user != null) {
+            return CommonResult.success(user);
+        } else {
+            return CommonResult.error("用户不存在");
         }
     }
 }
