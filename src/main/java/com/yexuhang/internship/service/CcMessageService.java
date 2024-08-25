@@ -2,6 +2,7 @@ package com.yexuhang.internship.service;
 
 import com.yexuhang.internship.bean.CcMessage;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.yexuhang.internship.config.CommonResult;
 
 /**
  * <p>
@@ -13,4 +14,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface CcMessageService extends IService<CcMessage> {
 
+    CommonResult<?> sendMessage(int senderId, int receiverId, String content);
+
+    CommonResult<?> getChatHistory(int userId);
 }

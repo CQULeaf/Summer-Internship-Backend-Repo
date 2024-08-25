@@ -13,10 +13,7 @@ import com.yexuhang.internship.config.CommonResult;
  */
 public interface CcUserService extends IService<CcUser> {
 
-        CcUser login(String username, String password);
-
-
-
+    CcUser login(String username, String password);
 
     CommonResult<?> getUserFriends(Long userId);
 
