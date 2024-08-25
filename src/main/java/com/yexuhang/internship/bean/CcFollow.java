@@ -1,12 +1,12 @@
 package com.yexuhang.internship.bean;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import java.io.Serializable;
-import java.sql.Timestamp;
-
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+
+import java.io.Serializable;
+import java.sql.Timestamp;
 
 /**
  * <p>
