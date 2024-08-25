@@ -3,10 +3,11 @@ package com.yexuhang.internship.bean;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import java.io.Serializable;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+
+import java.io.Serializable;
 
 /**
  * <p>
@@ -54,4 +55,6 @@ public class CcTopic implements Serializable {
      * 关注者数量
      */
     private Integer followerCount;
+
+    private String flag;
 }

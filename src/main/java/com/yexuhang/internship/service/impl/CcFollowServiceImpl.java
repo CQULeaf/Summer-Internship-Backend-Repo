@@ -1,17 +1,19 @@
 package com.yexuhang.internship.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yexuhang.internship.bean.CcFollow;
 import com.yexuhang.internship.bean.CcTopic;
 import com.yexuhang.internship.config.CommonResult;
 import com.yexuhang.internship.mapper.CcFollowMapper;
 import com.yexuhang.internship.mapper.CcTopicMapper;
 import com.yexuhang.internship.service.CcFollowService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -56,7 +58,7 @@ public class CcFollowServiceImpl extends ServiceImpl<CcFollowMapper, CcFollow> i
     }
 
     @Override
-    public CommonResult<?> getFriends(Long userId) {
+    public CommonResult<List<Map<String, Object>>> getFriends(Long userId) {
         // 将 userId 转换为 Integer 以匹配数据库中的 int unsigned 类型
         Integer userIdInt = userId.intValue();
 
@@ -83,14 +85,18 @@ public class CcFollowServiceImpl extends ServiceImpl<CcFollowMapper, CcFollow> i
 
         List<CcFollow> friends = ccFollowMapper.selectList(followersQuery);
 
-        // 提取互相关注的用户 ID
-        List<Long> friendIds = friends.stream()
-                .map(follower -> follower.getUserId().longValue())
+        // 构造返回的好友对象列表
+        List<Map<String, Object>> friendDetails = friends.stream()
+                .map(follower -> {
+                    Map<String, Object> friendData = new HashMap<>();
+                    friendData.put("user_id", follower.getUserId().longValue());
+                    return friendData;
+                })
                 .distinct()
                 .collect(Collectors.toList());
 
-        if (!friendIds.isEmpty()) {
-            return CommonResult.success(friendIds);
+        if (!friendDetails.isEmpty()) {
+            return CommonResult.success(friendDetails);
         } else {
             return CommonResult.error("没有找到好友");
         }
