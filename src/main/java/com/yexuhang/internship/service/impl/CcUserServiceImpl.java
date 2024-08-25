@@ -33,8 +33,6 @@ public class CcUserServiceImpl extends ServiceImpl<CcUserMapper, CcUser> impleme
         return ccUserMapper.selectOne(queryWrapper);
     }
 
-
-
     // 实现注册并完成两次密码输入的校验
     @Override
     public CommonResult<?> register(String username, String password1, String password2) {
