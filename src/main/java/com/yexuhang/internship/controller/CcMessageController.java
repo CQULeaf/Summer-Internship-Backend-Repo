@@ -1,7 +1,6 @@
 package com.yexuhang.internship.controller;
 
 import com.yexuhang.internship.bean.CcMessage;
-import com.yexuhang.internship.config.ChatWebSocketHandler;
 import com.yexuhang.internship.config.CommonResult;
 import com.yexuhang.internship.service.CcMessageService;
 import lombok.extern.slf4j.Slf4j;
