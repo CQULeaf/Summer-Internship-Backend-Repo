@@ -3,7 +3,6 @@ package com.yexuhang.internship.config;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yexuhang.internship.bean.CcMessage;
 import com.yexuhang.internship.service.CcMessageService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
@@ -17,7 +16,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @time 12:13 AM
  */
 public class ChatWebSocketHandler extends TextWebSocketHandler {
-    @Autowired
+
     private CcMessageService ccMessageService;
 
     // 存储用户的WebSocketSession

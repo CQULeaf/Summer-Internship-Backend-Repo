@@ -147,4 +147,20 @@ public class CcUserServiceImpl extends ServiceImpl<CcUserMapper, CcUser> impleme
             return CommonResult.error("用户不存在");
         }
     }
+
+    @Override
+    public CommonResult<CcUser> getUserByNickname(String nickname) {
+        // 使用 QueryWrapper 来构建查询条件
+        QueryWrapper<CcUser> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("nickname", nickname);
+
+        // 查询用户信息
+        CcUser user = ccUserMapper.selectOne(queryWrapper);
+
+        if (user != null) {
+            return CommonResult.success(user);
+        } else {
+            return CommonResult.error("用户不存在");
+        }
+    }
 }

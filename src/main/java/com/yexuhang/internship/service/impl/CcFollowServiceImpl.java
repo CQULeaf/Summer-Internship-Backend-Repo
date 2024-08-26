@@ -170,4 +170,39 @@ public class CcFollowServiceImpl extends ServiceImpl<CcFollowMapper, CcFollow> i
 
         return CommonResult.success(userIds);
     }
+
+
+    @Override
+    public CommonResult<?> followOrUnfollow(Integer userId, Integer followableId, String followableType, boolean isFollow) {
+        QueryWrapper<CcFollow> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("user_id", userId)
+                .eq("followable_id", followableId)
+                .eq("followable_type", followableType);
+
+        CcFollow existingFollow = ccFollowMapper.selectOne(queryWrapper);
+
+        if (isFollow) {
+            if (existingFollow != null) {
+                // 用户已经关注了该对象
+                return CommonResult.error("已经关注了该对象");
+            } else {
+                // 插入新的关注记录
+                CcFollow follow = new CcFollow();
+                follow.setUserId(userId);
+                follow.setFollowableId(followableId);
+                follow.setFollowableType(followableType);
+                ccFollowMapper.insert(follow);
+                return CommonResult.success("关注成功");
+            }
+        } else {
+            if (existingFollow == null) {
+                // 用户未关注该对象
+                return CommonResult.error("未关注该对象，无法取消关注");
+            } else {
+                // 删除关注记录
+                ccFollowMapper.delete(queryWrapper);
+                return CommonResult.success("取消关注成功");
+            }
+        }
+    }
 }

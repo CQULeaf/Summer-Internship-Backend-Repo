@@ -17,7 +17,7 @@ import java.util.List;
  * @since 2024-08-25
  */
 @RestController
-@RequestMapping("/home")
+@RequestMapping("/comment")
 public class CcCommentController {
 
     @Autowired
@@ -32,5 +32,38 @@ public class CcCommentController {
     @GetMapping("/getReply")
     public CommonResult<List<CcComment>> getReply(@RequestParam("postId") Integer postId) {
         return ccCommentService.getCommentsByPostId(postId);
+    }
+
+    /**
+     * 根据评论ID获取用户ID
+     *
+     * @param commentId 评论ID
+     * @return 用户ID
+     */
+    @GetMapping("/getUserIdByCommentId")
+    public CommonResult<Integer> getUserIdByCommentId(@RequestParam("commentId") Integer commentId) {
+        return ccCommentService.getUserIdByCommentId(commentId);
+    }
+
+    /**
+     * 添加评论
+     *
+     * @param comment 评论内容
+     * @return 操作结果
+     */
+    @PostMapping("/add")
+    public CommonResult<?> addComment(@RequestBody CcComment comment) {
+        return ccCommentService.addComment(comment);
+    }
+
+    /**
+     * 删除评论
+     *
+     * @param commentId 评论ID
+     * @return 操作结果
+     */
+    @DeleteMapping("/delete/{commentId}")
+    public CommonResult<?> deleteComment(@PathVariable Integer commentId) {
+        return ccCommentService.deleteCommentById(commentId);
     }
 }

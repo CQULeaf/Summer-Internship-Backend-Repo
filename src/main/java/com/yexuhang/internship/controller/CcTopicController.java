@@ -135,4 +135,27 @@ public class CcTopicController {
             return CommonResult.error("删除话题异常");
         }
     }
+
+    /**
+     * 根据flag标签获取所有话题信息
+     *
+     * @param flag 标签
+     * @return 对应标签的所有话题信息
+     */
+    @GetMapping("/getTopicsByFlag")
+    public CommonResult<List<CcTopic>> getTopicsByFlag(@RequestParam("flag") String flag) {
+        return ccTopicService.getTopicsByFlag(flag);
+    }
+
+    /**
+     * 根据flag标签和用户ID获取用户关注的所有话题信息
+     *
+     * @param flag 标签
+     * @param userId 用户ID
+     * @return 用户关注的所有话题信息
+     */
+    @GetMapping("/getTopicsByFlagAndUser")
+    public CommonResult<List<CcTopic>> getTopicsByFlagAndUser(@RequestParam("flag") String flag, @RequestParam("userId") Long userId) {
+        return ccTopicService.getTopicsByFlagAndUser(flag, userId);
+    }
 }

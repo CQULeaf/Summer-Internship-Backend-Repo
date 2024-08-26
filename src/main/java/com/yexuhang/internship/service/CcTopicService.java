@@ -46,4 +46,21 @@ public interface CcTopicService extends IService<CcTopic> {
      * @return 删除结果
      */
     CommonResult<?> deleteTopic(Long topicId);
+
+    /**
+     * 根据flag标签获取所有话题信息
+     *
+     * @param flag 标签
+     * @return 所有话题信息
+     */
+    CommonResult<List<CcTopic>> getTopicsByFlag(String flag);
+
+    /**
+     * 根据flag标签和用户ID获取用户关注的所有话题信息
+     *
+     * @param flag 标签
+     * @param userId 用户ID
+     * @return 用户关注的所有话题信息
+     */
+    CommonResult<List<CcTopic>> getTopicsByFlagAndUser(String flag, Long userId);
 }
