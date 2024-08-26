@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.io.Serializable;
 
 /**
  * <p>
@@ -112,5 +111,16 @@ public class CcUserController {
             // 使用默认错误返回
             return CommonResult.error("获取好友列表异常");
         }
+    }
+
+    /**
+     * 根据用户ID获取用户信息
+     *
+     * @param userId 用户ID
+     * @return 用户信息
+     */
+    @GetMapping("/getUserInfo")
+    public CommonResult<CcUser> getUserInfo(@RequestParam("userId") Long userId) {
+        return ccUserService.getUserById(userId);
     }
 }

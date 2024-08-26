@@ -1,9 +1,8 @@
 package com.yexuhang.internship.service;
 
-import com.yexuhang.internship.bean.CcUser;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.yexuhang.internship.bean.CcUser;
 import com.yexuhang.internship.config.CommonResult;
-import java.util.List;
 /**
  * <p>
  * 用户表 服务类
@@ -14,12 +13,11 @@ import java.util.List;
  */
 public interface CcUserService extends IService<CcUser> {
 
-        CcUser login(String username, String password);
-
-
-    CommonResult<?> register(String username, String password);
+    CcUser login(String username, String password);
 
     CommonResult<?> getUserFriends(Long userId);
+
+    CommonResult<CcUser> getUserById(Long userId);
 
     CommonResult<?> register(String username, String password, String password2);
 
