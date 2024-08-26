@@ -13,7 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -63,16 +66,28 @@ public class CcMessageServiceImpl extends ServiceImpl<CcMessageMapper, CcMessage
     // 获取用户的所有聊天记录
     @Override
     public CommonResult<?> getChatHistory(int userId) {
-        // 获取所有与用户相关的聊天记录
+        // 获取所有与用户相关的聊天记录，按时间降序排列
         QueryWrapper<CcMessage> messageQueryWrapper = new QueryWrapper<>();
         messageQueryWrapper.eq("sender_id", userId)
                 .or()
                 .eq("receiver_id", userId)
-                .orderByAsc("created_at");
+                .orderByDesc("created_at");
 
         List<CcMessage> messages = ccMessageMapper.selectList(messageQueryWrapper);
 
-        return CommonResult.success(messages);
+        // 使用 LinkedHashMap 来保持插入顺序，保证先出现的朋友是最近联系的朋友
+        Map<Integer, CcMessage> chatHistoryMap = new LinkedHashMap<>();
+        for (CcMessage message : messages) {
+            int friendId = (message.getSenderId() == userId) ? message.getReceiverId() : message.getSenderId();
+            // 只保存每个朋友的最新一条消息
+            chatHistoryMap.putIfAbsent(friendId, message);
+        }
+
+        // 将 Map 中的值转化为 List 返回
+        List<CcMessage> chatHistories = new ArrayList<>(chatHistoryMap.values());
+
+        return CommonResult.success(chatHistories);
     }
+
 
 }
