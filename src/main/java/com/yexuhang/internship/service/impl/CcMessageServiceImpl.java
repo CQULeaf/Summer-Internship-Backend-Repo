@@ -6,7 +6,6 @@ import com.yexuhang.internship.bean.CcMessage;
 import com.yexuhang.internship.config.CommonResult;
 import com.yexuhang.internship.mapper.CcFollowMapper;
 import com.yexuhang.internship.mapper.CcMessageMapper;
-import com.yexuhang.internship.mapper.CcUserMapper;
 import com.yexuhang.internship.service.CcMessageService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +30,13 @@ public class CcMessageServiceImpl extends ServiceImpl<CcMessageMapper, CcMessage
 
     @Autowired
     private CcFollowMapper ccFollowMapper;
+
+    // 保存消息到数据库, 保存成功返回true
+    @Override
+    public boolean save(CcMessage message) {
+        ccMessageMapper.insert(message);
+        return false;
+    }
 
     @Override
     public CommonResult<?> sendMessage(int senderId, int receiverId, String content) {
