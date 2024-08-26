@@ -4,10 +4,7 @@ import com.yexuhang.internship.bean.CcPost;
 import com.yexuhang.internship.config.CommonResult;
 import com.yexuhang.internship.service.CcPostService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -57,5 +54,39 @@ public class CcPostController {
     @GetMapping("/getPost")
     public CommonResult<CcPost> getPost(@RequestParam("postId") Long postId) {
         return ccPostService.getPostById(postId);
+    }
+
+    /**
+     * 根据话题ID获取所有帖子信息
+     *
+     * @param topicId 话题ID
+     * @return 对应话题的所有帖子信息
+     */
+    @GetMapping("/getPostsByTopicId")
+    public CommonResult<List<CcPost>> getPostsByTopicId(@RequestParam("topicId") Integer topicId) {
+        return ccPostService.getPostsByTopicId(topicId);
+    }
+
+
+    /**
+     * 发布帖子
+     *
+     * @param ccPost 帖子对象
+     * @return 发布结果
+     */
+    @PostMapping("/publish")
+    public CommonResult<?> publishPost(@RequestBody CcPost ccPost) {
+        return ccPostService.publishPost(ccPost);
+    }
+
+    /**
+     * 删除帖子
+     *
+     * @param postId 帖子ID
+     * @return 删除结果
+     */
+    @DeleteMapping("/delete/{postId}")
+    public CommonResult<?> deletePost(@PathVariable Long postId) {
+        return ccPostService.deletePost(postId);
     }
 }

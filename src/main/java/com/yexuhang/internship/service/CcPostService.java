@@ -40,4 +40,27 @@ public interface CcPostService extends IService<CcPost> {
     CommonResult<CcPost> getPostById(Long postId);
 
 
+    /**
+     * 根据话题ID获取所有帖子信息
+     *
+     * @param topicId 话题ID
+     * @return 所有帖子信息
+     */
+    CommonResult<List<CcPost>> getPostsByTopicId(Integer topicId);
+
+    /**
+     * 发布帖子
+     *
+     * @param ccPost 帖子对象
+     * @return 操作结果
+     */
+    CommonResult<?> publishPost(CcPost ccPost);
+
+    /**
+     * 删除帖子
+     *
+     * @param postId 帖子ID
+     * @return 操作结果
+     */
+    CommonResult<?> deletePost(Long postId);
 }

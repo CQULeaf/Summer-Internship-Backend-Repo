@@ -23,4 +23,16 @@ public interface CcCommentService extends IService<CcComment> {
      * @return 所有评论信息
      */
     CommonResult<List<CcComment>> getCommentsByPostId(Integer postId);
+
+    /**
+     * 根据评论ID获取用户ID
+     *
+     * @param commentId 评论ID
+     * @return 用户ID
+     */
+    CommonResult<Integer> getUserIdByCommentId(Integer commentId);
+
+    CommonResult<?> addComment(CcComment comment);
+
+    CommonResult<?> deleteCommentById(Integer commentId);
 }
