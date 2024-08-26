@@ -1,16 +1,11 @@
 package com.yexuhang.internship.controller;
 
-import com.yexuhang.internship.bean.CcMessage;
-import com.yexuhang.internship.config.ChatWebSocketHandler;
 import com.yexuhang.internship.config.CommonResult;
 import com.yexuhang.internship.service.CcMessageService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.socket.WebSocketSession;
 
-import java.sql.Timestamp;
 import java.util.Map;
 
 /**
