@@ -49,4 +49,7 @@ public interface CcFollowService extends IService<CcFollow> {
     CommonResult<List<Long>> getFollowedPostsByUserId(Long userId);
 
     CommonResult<List<Long>> getUsersFollowingPost(Long postId);
+
+    // 关注或取消关注
+    CommonResult<?> followOrUnfollow(Integer userId, Integer followableId, String followableType, boolean isFollow);
 }
