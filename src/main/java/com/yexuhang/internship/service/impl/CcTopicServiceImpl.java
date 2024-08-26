@@ -1,15 +1,18 @@
 package com.yexuhang.internship.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.yexuhang.internship.bean.CcFollow;
 import com.yexuhang.internship.bean.CcTopic;
 import com.yexuhang.internship.config.CommonResult;
+import com.yexuhang.internship.mapper.CcFollowMapper;
 import com.yexuhang.internship.mapper.CcTopicMapper;
 import com.yexuhang.internship.service.CcTopicService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -22,6 +25,8 @@ public class CcTopicServiceImpl extends ServiceImpl<CcTopicMapper, CcTopic> impl
 
     @Autowired
     private CcTopicMapper ccTopicMapper;
+    @Autowired
+    private CcFollowMapper ccFollowMapper;
 
     @Override
     public CommonResult<CcTopic> getTopicById(Long topicId) {
@@ -73,5 +78,44 @@ public class CcTopicServiceImpl extends ServiceImpl<CcTopicMapper, CcTopic> impl
         } else {
             return CommonResult.error("话题删除失败");
         }
+    }
+
+    @Override
+    public CommonResult<List<CcTopic>> getTopicsByFlag(String flag) {
+        // 使用QueryWrapper构建查询条件
+        QueryWrapper<CcTopic> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("flag", flag);
+
+        // 查询所有符合条件的话题
+        List<CcTopic> topics = ccTopicMapper.selectList(queryWrapper);
+        return CommonResult.success(topics);
+    }
+
+
+    @Override
+    public CommonResult<List<CcTopic>> getTopicsByFlagAndUser(String flag, Long userId) {
+        // 首先将userId转换为Integer类型
+        Integer userIdInt = userId.intValue();
+
+        // 查询当前用户关注的所有topic的ID列表
+        QueryWrapper<CcFollow> followQueryWrapper = new QueryWrapper<>();
+        followQueryWrapper.eq("user_id", userIdInt) // 使用Integer类型的userIdInt
+                .eq("followable_type", "topic");
+        List<Long> followedTopicIds = ccFollowMapper.selectList(followQueryWrapper)
+                .stream()
+                .map(follow -> follow.getFollowableId().longValue()) // 将ID转换为Long类型
+                .collect(Collectors.toList());
+
+        if (followedTopicIds.isEmpty()) {
+            return CommonResult.error("用户没有关注任何话题");
+        }
+
+        // 根据话题ID列表和flag查询话题信息
+        QueryWrapper<CcTopic> topicQueryWrapper = new QueryWrapper<>();
+        topicQueryWrapper.in("topic_id", followedTopicIds)
+                .eq("flag", flag);
+        List<CcTopic> topics = ccTopicMapper.selectList(topicQueryWrapper);
+
+        return CommonResult.success(topics);
     }
 }

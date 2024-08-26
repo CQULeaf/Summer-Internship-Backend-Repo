@@ -52,4 +52,34 @@ public class CcPostServiceImpl extends ServiceImpl<CcPostMapper, CcPost> impleme
         }
     }
 
+    @Override
+    public CommonResult<List<CcPost>> getPostsByTopicId(Integer topicId) {
+        // 使用QueryWrapper构建查询条件
+        QueryWrapper<CcPost> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("topic_id", topicId);
+
+        // 查询所有符合条件的帖子
+        List<CcPost> posts = ccPostMapper.selectList(queryWrapper);
+        return CommonResult.success(posts);
+    }
+
+    @Override
+    public CommonResult<?> publishPost(CcPost ccPost) {
+        int result = ccPostMapper.insert(ccPost);
+        if (result > 0) {
+            return CommonResult.success("帖子发布成功");
+        } else {
+            return CommonResult.error("帖子发布失败");
+        }
+    }
+
+    @Override
+    public CommonResult<?> deletePost(Long postId) {
+        int result = ccPostMapper.deleteById(postId);
+        if (result > 0) {
+            return CommonResult.success("帖子删除成功");
+        } else {
+            return CommonResult.error("帖子删除失败");
+        }
+    }
 }

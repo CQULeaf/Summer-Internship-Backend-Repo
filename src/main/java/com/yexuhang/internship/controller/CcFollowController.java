@@ -4,10 +4,7 @@ import com.yexuhang.internship.config.CommonResult;
 import com.yexuhang.internship.service.CcFollowService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -133,6 +130,8 @@ public class CcFollowController {
         return ccFollowService.getFollowedPostsByUserId(userId);
     }
 
+
+
     /**
      * 根据帖子ID获取所有关注该帖子的用户ID
      *
@@ -142,5 +141,23 @@ public class CcFollowController {
     @GetMapping("/getUsersFollowingPost")
     public CommonResult<List<Long>> getUsersFollowingPost(@RequestParam("postId") Long postId) {
         return ccFollowService.getUsersFollowingPost(postId);
+    }
+
+
+    /**
+     * 关注或取消关注接口
+     *
+     * @param userId 用户ID
+     * @param followableId 被关注对象ID
+     * @param followableType 关注对象类型（user、question、post、topic）
+     * @param isFollow 是否关注（true：关注，false：取消关注）
+     * @return 操作结果
+     */
+    @PostMapping("/followOrUnfollow")
+    public CommonResult<?> followOrUnfollow(@RequestParam("userId") Integer userId,
+                                            @RequestParam("followableId") Integer followableId,
+                                            @RequestParam("followableType") String followableType,
+                                            @RequestParam("isFollow") boolean isFollow) {
+        return ccFollowService.followOrUnfollow(userId, followableId, followableType, isFollow);
     }
 }

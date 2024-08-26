@@ -26,5 +26,8 @@ public interface CcUserService extends IService<CcUser> {
     CommonResult<?> updatePassword(String username, String oldPassword, String newPassword1, String newPassword2);
 
     CommonResult<?> updateAvatar(String username, String avatar);
+
+    // 根据昵称获取用户信息
+    CommonResult<CcUser> getUserByNickname(String nickname);
 }
 

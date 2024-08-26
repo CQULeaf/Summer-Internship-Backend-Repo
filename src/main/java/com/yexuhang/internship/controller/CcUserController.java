@@ -123,4 +123,16 @@ public class CcUserController {
     public CommonResult<CcUser> getUserInfo(@RequestParam("userId") Long userId) {
         return ccUserService.getUserById(userId);
     }
+
+
+    /**
+     * 根据昵称获取用户信息
+     *
+     * @param nickname 用户昵称
+     * @return 用户信息
+     */
+    @GetMapping("/getUserByNickname")
+    public CommonResult<CcUser> getUserByNickname(@RequestParam("nickname") String nickname) {
+        return ccUserService.getUserByNickname(nickname);
+    }
 }

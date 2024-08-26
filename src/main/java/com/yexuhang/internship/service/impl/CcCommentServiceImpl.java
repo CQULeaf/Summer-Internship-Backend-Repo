@@ -33,4 +33,40 @@ public class CcCommentServiceImpl extends ServiceImpl<CcCommentMapper, CcComment
         List<CcComment> comments = ccCommentMapper.selectList(queryWrapper);
         return CommonResult.success(comments);
     }
+
+    @Override
+    public CommonResult<Integer> getUserIdByCommentId(Integer commentId) {
+        // 使用 QueryWrapper 查询对应 commentId 的评论
+        QueryWrapper<CcComment> queryWrapper = new QueryWrapper<>();
+        queryWrapper.select("user_id").eq("comment_id", commentId);
+        CcComment comment = ccCommentMapper.selectOne(queryWrapper);
+        if (comment != null) {
+            return CommonResult.success(comment.getUserId());
+        } else {
+            return CommonResult.error("评论不存在");
+        }
+    }
+
+
+    @Override
+    public CommonResult<?> addComment(CcComment comment) {
+        int result = ccCommentMapper.insert(comment);
+        if (result > 0) {
+            return CommonResult.success("评论添加成功");
+        } else {
+            return CommonResult.error("评论添加失败");
+        }
+    }
+
+    @Override
+    public CommonResult<?> deleteCommentById(Integer commentId) {
+        int result = ccCommentMapper.deleteById(commentId);
+        if (result > 0) {
+            return CommonResult.success("评论删除成功");
+        } else {
+            return CommonResult.error("评论删除失败");
+        }
+    }
+
+
 }
