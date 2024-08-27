@@ -34,6 +34,13 @@ public class CcMessageServiceImpl extends ServiceImpl<CcMessageMapper, CcMessage
     @Autowired
     private CcFollowMapper ccFollowMapper;
 
+    // 保存消息到数据库, 保存成功返回true
+    @Override
+    public boolean save(CcMessage message) {
+        ccMessageMapper.insert(message);
+        return false;
+    }
+
     @Override
     public CommonResult<?> sendMessage(int senderId, int receiverId, String content) {
         // 检查是否为好友关系
