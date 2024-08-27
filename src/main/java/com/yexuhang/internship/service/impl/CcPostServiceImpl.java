@@ -27,10 +27,13 @@ public class CcPostServiceImpl extends ServiceImpl<CcPostMapper, CcPost> impleme
 
     @Override
     public CommonResult<List<CcPost>> getAllPosts() {
-        // 查询所有文章信息
-        List<CcPost> posts = ccPostMapper.selectList(null);
+        // 使用 QueryWrapper 进行查询，并按创建时间降序排列
+        QueryWrapper<CcPost> queryWrapper = new QueryWrapper<>();
+        queryWrapper.orderByDesc("created_at");
+        List<CcPost> posts = ccPostMapper.selectList(queryWrapper);
         return CommonResult.success(posts);
     }
+
 
     @Override
     public CommonResult<List<CcPost>> getPostsByUserId(Long userId) {

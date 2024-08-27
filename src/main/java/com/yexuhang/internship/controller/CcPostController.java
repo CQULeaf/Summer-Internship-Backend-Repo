@@ -3,13 +3,11 @@ package com.yexuhang.internship.controller;
 import com.yexuhang.internship.bean.CcPost;
 import com.yexuhang.internship.config.CommonResult;
 import com.yexuhang.internship.service.CcPostService;
+import com.yexuhang.internship.util.UploadUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.http.ResponseEntity;
-import org.springframework.http.HttpStatus;
-import com.yexuhang.internship.util.UploadUtil;
-
 
 import java.io.IOException;
 import java.util.List;
@@ -31,7 +29,7 @@ public class CcPostController {
     private CcPostService ccPostService;
 
     /**
-     * 获取所有文章信息
+     * 获取所有文章信息，按创建时间降序
      *
      * @return 所有文章信息
      */
@@ -39,7 +37,6 @@ public class CcPostController {
     public CommonResult<List<CcPost>> getAllPosts() {
         return ccPostService.getAllPosts();
     }
-
     /**
      * 根据用户ID获取用户发布的所有帖子信息
      *
