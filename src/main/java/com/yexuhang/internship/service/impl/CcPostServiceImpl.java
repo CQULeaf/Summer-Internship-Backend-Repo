@@ -82,4 +82,10 @@ public class CcPostServiceImpl extends ServiceImpl<CcPostMapper, CcPost> impleme
             return CommonResult.error("帖子删除失败");
         }
     }
+
+    @Override
+    public boolean updatePost(CcPost ccPost) {
+        // 使用 MyBatis Plus 的 updateById 方法更新文章信息
+        return updateById(ccPost);
+    }
 }
