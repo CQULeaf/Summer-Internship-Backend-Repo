@@ -24,9 +24,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     public void registerStompEndpoints(StompEndpointRegistry registry) {
 
         registry.addEndpoint("/endpoint-websocket")
-                .setAllowedOrigins("*")
-                .withSockJS()
-                .setHeartbeatTime(10000);
+                .setAllowedOrigins("*");
     }
 
     /**
@@ -37,9 +35,11 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
 
-        registry.enableSimpleBroker("/topic", "/chat")
+        registry.enableSimpleBroker("/topic", "/queue")
                 .setHeartbeatValue(new long[] {10000, 10000})
                 .setTaskScheduler(new DefaultManagedTaskScheduler());
         registry.setApplicationDestinationPrefixes("/app");
+        // 配置用户前缀，用于将消息发送到特定用户
+        registry.setUserDestinationPrefix("/user");
     }
 }

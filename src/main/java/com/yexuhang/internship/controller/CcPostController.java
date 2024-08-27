@@ -5,7 +5,13 @@ import com.yexuhang.internship.config.CommonResult;
 import com.yexuhang.internship.service.CcPostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
+import com.yexuhang.internship.util.UploadUtil;
 
+
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -42,6 +48,13 @@ public class CcPostController {
     @GetMapping("/mypost")
     public CommonResult<List<CcPost>> getMyPosts(@RequestParam("user_id") Long userId) {
         return ccPostService.getPostsByUserId(userId);
+    }
+
+    @PostMapping("/uploadImage")
+    public ResponseEntity<String> uploadImage(@RequestParam("file") MultipartFile file) throws IOException {
+            // 调用 UploadUtil 的上传方法
+            String imageUrl = UploadUtil.uploadImage(file);
+            return ResponseEntity.ok(imageUrl);
     }
 
 
