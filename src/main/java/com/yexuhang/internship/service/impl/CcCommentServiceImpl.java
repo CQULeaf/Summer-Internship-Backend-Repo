@@ -69,4 +69,8 @@ public class CcCommentServiceImpl extends ServiceImpl<CcCommentMapper, CcComment
     }
 
 
+    @Override
+    public int countTotalComments() {
+        return Math.toIntExact(ccCommentMapper.selectCount(null)); // MyBatis-Plus 提供的 selectCount 方法
+    }
 }

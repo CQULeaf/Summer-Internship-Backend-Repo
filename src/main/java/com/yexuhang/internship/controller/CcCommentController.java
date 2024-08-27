@@ -67,4 +67,14 @@ public class CcCommentController {
     public CommonResult<?> deleteComment(@PathVariable Integer commentId) {
         return ccCommentService.deleteCommentById(commentId);
     }
+
+    /**
+     * 获取总的评论数
+     *
+     * @return 总评论数
+     */
+    @GetMapping("/count")
+    public int getTotalComments() {
+        return ccCommentService.countTotalComments();
+    }
 }

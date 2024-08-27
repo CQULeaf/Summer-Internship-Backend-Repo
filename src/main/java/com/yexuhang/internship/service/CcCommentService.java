@@ -35,4 +35,11 @@ public interface CcCommentService extends IService<CcComment> {
     CommonResult<?> addComment(CcComment comment);
 
     CommonResult<?> deleteCommentById(Integer commentId);
+
+    /**
+     * 统计总的评论数
+     *
+     * @return 总评论数
+     */
+    int countTotalComments();
 }
