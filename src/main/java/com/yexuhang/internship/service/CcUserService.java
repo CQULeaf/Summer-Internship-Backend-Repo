@@ -29,5 +29,9 @@ public interface CcUserService extends IService<CcUser> {
 
     // 根据昵称获取用户信息
     CommonResult<CcUser> getUserByNickname(String nickname);
+
+    CommonResult<?> addUser(CcUser ccUser);
+    CommonResult<?> deleteUser(Long userId);
+    CommonResult<?> updateUser(CcUser ccUser);
 }
 

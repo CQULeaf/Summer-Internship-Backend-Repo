@@ -6,7 +6,6 @@ import com.yexuhang.internship.bean.CcMessage;
 import com.yexuhang.internship.config.CommonResult;
 import com.yexuhang.internship.mapper.CcFollowMapper;
 import com.yexuhang.internship.mapper.CcMessageMapper;
-import com.yexuhang.internship.mapper.CcUserMapper;
 import com.yexuhang.internship.service.CcMessageService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;

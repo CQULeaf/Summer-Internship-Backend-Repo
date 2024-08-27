@@ -163,4 +163,34 @@ public class CcUserServiceImpl extends ServiceImpl<CcUserMapper, CcUser> impleme
             return CommonResult.error("用户不存在");
         }
     }
+
+    @Override
+    public CommonResult<?> addUser(CcUser ccUser) {
+        int result = ccUserMapper.insert(ccUser);
+        if (result > 0) {
+            return CommonResult.success("用户添加成功");
+        } else {
+            return CommonResult.error("用户添加失败");
+        }
+    }
+
+    @Override
+    public CommonResult<?> deleteUser(Long userId) {
+        int result = ccUserMapper.deleteById(userId);
+        if (result > 0) {
+            return CommonResult.success("用户删除成功");
+        } else {
+            return CommonResult.error("用户删除失败");
+        }
+    }
+
+    @Override
+    public CommonResult<?> updateUser(CcUser ccUser) {
+        int result = ccUserMapper.updateById(ccUser);
+        if (result > 0) {
+            return CommonResult.success("用户信息更新成功");
+        } else {
+            return CommonResult.error("用户信息更新失败");
+        }
+    }
 }
