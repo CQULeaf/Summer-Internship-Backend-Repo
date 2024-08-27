@@ -63,4 +63,6 @@ public interface CcPostService extends IService<CcPost> {
      * @return 操作结果
      */
     CommonResult<?> deletePost(Long postId);
+
+    boolean updatePost(CcPost ccPost);
 }

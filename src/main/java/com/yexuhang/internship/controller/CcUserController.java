@@ -135,4 +135,23 @@ public class CcUserController {
     public CommonResult<CcUser> getUserByNickname(@RequestParam("nickname") String nickname) {
         return ccUserService.getUserByNickname(nickname);
     }
+
+
+    // 添加用户
+    @PostMapping("/add")
+    public CommonResult<?> addUser(@RequestBody CcUser ccUser) {
+        return ccUserService.addUser(ccUser);
+    }
+
+    // 删除用户
+    @DeleteMapping("/delete/{userId}")
+    public CommonResult<?> deleteUser(@PathVariable Long userId) {
+        return ccUserService.deleteUser(userId);
+    }
+
+    // 更新用户信息
+    @PutMapping("/update")
+    public CommonResult<?> updateUser(@RequestBody CcUser ccUser) {
+        return ccUserService.updateUser(ccUser);
+    }
 }

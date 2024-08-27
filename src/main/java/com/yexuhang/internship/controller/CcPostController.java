@@ -89,4 +89,21 @@ public class CcPostController {
     public CommonResult<?> deletePost(@PathVariable Long postId) {
         return ccPostService.deletePost(postId);
     }
+
+
+    /**
+     * 更新文章信息
+     *
+     * @param ccPost 文章对象
+     * @return 更新结果
+     */
+    @PutMapping("/update")
+    public CommonResult<?> updatePost(@RequestBody CcPost ccPost) {
+        boolean result = ccPostService.updatePost(ccPost);
+        if (result) {
+            return CommonResult.success("文章更新成功");
+        } else {
+            return CommonResult.error("文章更新失败");
+        }
+    }
 }
