@@ -20,7 +20,7 @@ public class ChatController {
     @Autowired
     private CcMessageService ccMessageService;
 
-    @MessageMapping("/chat")
+    @MessageMapping("/private")
     public void handlePrivateMessage(CcMessage message) {
         // 保存消息到数据库
         message.setCreatedAt(new Timestamp(System.currentTimeMillis()));
