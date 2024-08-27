@@ -19,6 +19,7 @@ import java.util.List;
 @RestController
 @Slf4j
 @RequestMapping("/user")
+@CrossOrigin(origins = "*")
 public class CcFollowController {
 
     @Autowired

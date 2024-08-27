@@ -18,6 +18,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/ccPost")
+@CrossOrigin(origins = "*")
 public class CcPostController {
 
     @Autowired

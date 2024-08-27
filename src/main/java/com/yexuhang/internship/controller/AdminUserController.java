@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/admin")
+@CrossOrigin(origins = "*")
 public class AdminUserController {
 
     @Autowired
@@ -27,7 +28,10 @@ public class AdminUserController {
      * @return 登录结果
      */
     @PostMapping("/login")
-    public CommonResult<?> login(@RequestParam String username, @RequestParam String password) {
+    public CommonResult<?> login(@RequestBody AdminUser loginRequest) {
+        String username = loginRequest.getUsername();
+        String password = loginRequest.getPassword();
+
         return adminUserService.login(username, password);
     }
 
