@@ -3,6 +3,10 @@ package com.yexuhang.internship.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.yexuhang.internship.bean.CcUser;
 import com.yexuhang.internship.config.CommonResult;
+
+import java.util.List;
+import java.util.Map;
+
 /**
  * <p>
  * 用户表 服务类
@@ -33,5 +37,21 @@ public interface CcUserService extends IService<CcUser> {
     CommonResult<?> addUser(CcUser ccUser);
     CommonResult<?> deleteUser(Long userId);
     CommonResult<?> updateUser(CcUser ccUser);
+
+
+    /**
+     * 获取用户总人数
+     *
+     * @return 用户总人数
+     */
+    int getTotalUserCount();
+
+
+    /**
+     * 根据家乡对用户进行分类，并返回各个地区的总人数和地区名称
+     *
+     * @return 包含地区名称和总人数的列表
+     */
+    CommonResult<List<Map<String, Object>>> getUserCountByHometown();
 }
 

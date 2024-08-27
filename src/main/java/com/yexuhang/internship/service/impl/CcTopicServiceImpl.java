@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -117,5 +118,18 @@ public class CcTopicServiceImpl extends ServiceImpl<CcTopicMapper, CcTopic> impl
         List<CcTopic> topics = ccTopicMapper.selectList(topicQueryWrapper);
 
         return CommonResult.success(topics);
+    }
+
+
+    @Override
+    public CommonResult<List<Map<String, Object>>> getTopicAndPostCountByFlag() {
+        // 使用 QueryWrapper 来分组查询各个flag下的topic数和帖子数
+        QueryWrapper<CcTopic> queryWrapper = new QueryWrapper<>();
+        queryWrapper.select("flag, COUNT(*) as topic_count, SUM(post_count) as total_post_count")
+                .groupBy("flag");
+
+        List<Map<String, Object>> result = this.listMaps(queryWrapper);
+
+        return CommonResult.success(result);
     }
 }

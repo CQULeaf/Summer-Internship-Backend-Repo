@@ -1,10 +1,11 @@
 package com.yexuhang.internship.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.yexuhang.internship.bean.CcTopic;
 import com.yexuhang.internship.config.CommonResult;
-import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
+import java.util.Map;
 
 public interface CcTopicService extends IService<CcTopic> {
 
@@ -63,4 +64,11 @@ public interface CcTopicService extends IService<CcTopic> {
      * @return 用户关注的所有话题信息
      */
     CommonResult<List<CcTopic>> getTopicsByFlagAndUser(String flag, Long userId);
+
+    /**
+     * 获取各个flag下的topic数和帖子数
+     *
+     * @return 各个flag下的topic数和帖子数
+     */
+    CommonResult<List<Map<String, Object>>> getTopicAndPostCountByFlag();
 }

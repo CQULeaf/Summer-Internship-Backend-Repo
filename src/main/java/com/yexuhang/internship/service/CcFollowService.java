@@ -52,4 +52,14 @@ public interface CcFollowService extends IService<CcFollow> {
 
     // 关注或取消关注
     CommonResult<?> followOrUnfollow(Integer userId, Integer followableId, String followableType, boolean isFollow);
+
+    /**
+     * 判断用户是否关注某个目标
+     *
+     * @param userId 用户ID
+     * @param followableId 关注目标ID
+     * @param followableType 关注目标类型
+     * @return 如果关注返回 true，否则返回 false
+     */
+    boolean isFollowing(Long userId, Long followableId, String followableType);
 }

@@ -205,4 +205,15 @@ public class CcFollowServiceImpl extends ServiceImpl<CcFollowMapper, CcFollow> i
             }
         }
     }
+
+
+    @Override
+    public boolean isFollowing(Long userId, Long followableId, String followableType) {
+        // 使用 MyBatis Plus 的 lambdaQuery 方法来查询数据库中是否存在符合条件的关注记录
+        return lambdaQuery()
+                .eq(CcFollow::getUserId, userId)
+                .eq(CcFollow::getFollowableId, followableId)
+                .eq(CcFollow::getFollowableType, followableType)
+                .count() > 0;
+    }
 }

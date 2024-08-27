@@ -161,4 +161,21 @@ public class CcFollowController {
                                             @RequestParam("isFollow") boolean isFollow) {
         return ccFollowService.followOrUnfollow(userId, followableId, followableType, isFollow);
     }
+
+
+    /**
+     * 检查用户是否关注目标
+     *
+     * @param userId 用户ID
+     * @param followableId 关注目标ID
+     * @param followableType 关注目标类型（user、post、topic）
+     * @return 是否关注
+     */
+    @GetMapping("/isFollowing")
+    public CommonResult<Boolean> isFollowing(@RequestParam("userId") Long userId,
+                                             @RequestParam("followableId") Long followableId,
+                                             @RequestParam("followableType") String followableType) {
+        boolean isFollowing = ccFollowService.isFollowing(userId, followableId, followableType);
+        return CommonResult.success(isFollowing);
+    }
 }

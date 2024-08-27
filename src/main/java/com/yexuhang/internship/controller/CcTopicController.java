@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -157,5 +158,15 @@ public class CcTopicController {
     @GetMapping("/getTopicsByFlagAndUser")
     public CommonResult<List<CcTopic>> getTopicsByFlagAndUser(@RequestParam("flag") String flag, @RequestParam("userId") Long userId) {
         return ccTopicService.getTopicsByFlagAndUser(flag, userId);
+    }
+
+    /**
+     * 获取各个flag下的topic数和帖子数
+     *
+     * @return 各个flag下的topic数和帖子数
+     */
+    @GetMapping("/countByFlag")
+    public CommonResult<List<Map<String, Object>>> getTopicAndPostCountByFlag() {
+        return ccTopicService.getTopicAndPostCountByFlag();
     }
 }

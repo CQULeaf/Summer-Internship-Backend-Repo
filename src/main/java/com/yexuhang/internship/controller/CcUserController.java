@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -153,5 +155,29 @@ public class CcUserController {
     @PutMapping("/update")
     public CommonResult<?> updateUser(@RequestBody CcUser ccUser) {
         return ccUserService.updateUser(ccUser);
+    }
+
+
+
+    /**
+     * 获取用户总人数
+     *
+     * @return 用户总人数
+     */
+    @GetMapping("/count")
+    public CommonResult<Integer> getTotalUserCount() {
+        int userCount = ccUserService.getTotalUserCount();
+        return CommonResult.success(userCount);
+    }
+
+
+    /**
+     * 根据家乡对用户进行分类，并返回各个地区的总人数和地区名称
+     *
+     * @return 包含地区名称和总人数的列表
+     */
+    @GetMapping("/countByHometown")
+    public CommonResult<List<Map<String, Object>>> getUserCountByHometown() {
+        return ccUserService.getUserCountByHometown();
     }
 }

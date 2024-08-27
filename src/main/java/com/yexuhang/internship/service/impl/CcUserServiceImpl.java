@@ -1,15 +1,16 @@
 package com.yexuhang.internship.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yexuhang.internship.bean.CcUser;
 import com.yexuhang.internship.config.CommonResult;
 import com.yexuhang.internship.mapper.CcUserMapper;
 import com.yexuhang.internship.service.CcUserService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -192,5 +193,25 @@ public class CcUserServiceImpl extends ServiceImpl<CcUserMapper, CcUser> impleme
         } else {
             return CommonResult.error("用户信息更新失败");
         }
+    }
+
+
+    @Override
+    public int getTotalUserCount() {
+        // 使用 MyBatis-Plus 提供的 count 方法获取用户总数
+        return (int) this.count();
+    }
+
+
+    @Override
+    public CommonResult<List<Map<String, Object>>> getUserCountByHometown() {
+        // 使用 MyBatis-Plus 的 QueryWrapper 进行分组查询
+        QueryWrapper<CcUser> queryWrapper = new QueryWrapper<>();
+        queryWrapper.select("hometown, COUNT(*) as total")
+                .groupBy("hometown");
+
+        List<Map<String, Object>> result = this.listMaps(queryWrapper);
+
+        return CommonResult.success(result);
     }
 }
