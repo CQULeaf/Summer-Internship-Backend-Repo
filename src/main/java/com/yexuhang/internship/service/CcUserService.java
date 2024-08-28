@@ -53,5 +53,8 @@ public interface CcUserService extends IService<CcUser> {
      * @return 包含地区名称和总人数的列表
      */
     CommonResult<List<Map<String, Object>>> getUserCountByHometown();
+
+    // 返回所有用户信息
+    CommonResult<List<CcUser>> getAllUsers();
 }
 

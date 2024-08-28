@@ -214,4 +214,10 @@ public class CcUserServiceImpl extends ServiceImpl<CcUserMapper, CcUser> impleme
 
         return CommonResult.success(result);
     }
+
+    @Override
+    public CommonResult<List<CcUser>> getAllUsers() {
+        List<CcUser> users = this.list();
+        return CommonResult.success(users);
+    }
 }

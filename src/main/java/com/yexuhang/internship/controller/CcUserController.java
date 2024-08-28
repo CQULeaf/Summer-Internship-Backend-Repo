@@ -180,4 +180,9 @@ public class CcUserController {
     public CommonResult<List<Map<String, Object>>> getUserCountByHometown() {
         return ccUserService.getUserCountByHometown();
     }
+
+    @GetMapping("/all")
+    public CommonResult<List<CcUser>> getAllUsers() {
+        return ccUserService.getAllUsers();
+    }
 }
