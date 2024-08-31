@@ -23,9 +23,9 @@ public class UploadUtil {
         String uuid = UUID.randomUUID().toString().replace("-", "");
         String fileName = uuid + ext;
 
-        String endpoint = "oss-cn-chengdu.aliyuncs.com";
-        String accessKeyId = "LTAI5tMo9XGsgJepGLCzvK1P";
-        String accessKeySecret = "SjzqHoA4bljiv0sMRdnddLDbjvOGAp";
+        String endpoint = "https://oss-cn-chengdu.aliyuncs.com";
+        String accessKeyId = "your accessKeyId";
+        String accessKeySecret = "your accessKeySecret";
 
         // 创建OSSClient实例。
         OSS ossClient = new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);
