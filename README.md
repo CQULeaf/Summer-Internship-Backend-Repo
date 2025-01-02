@@ -17,3 +17,8 @@
 | WebSocket | 基于Spring Boot | 实时通信功能，实现实时聊天功能 |
 | Lombok | 最新 | 简化Java代码，减少样板代码 |
 | Velocity Engine | 2.3 | 模板引擎，用于生成代码或模板内容 |
+
+### 相关链接
+
+1. [项目前端部分](https://github.com/CQULeaf/Summer-Internship-Frontend-Repo)
+2. [项目后台管理部分](https://github.com/CQULeaf/Summer-Internship-Admin-Repo)
